@@ -1,0 +1,3 @@
+[submodule "php_selector"]
+	path = php_selector
+	url = https://github.com/tj/php-selector.git

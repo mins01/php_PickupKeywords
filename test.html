@@ -1,0 +1,1107 @@
+
+<!doctype html>
+<html lang="ko">
+<head>
+	<title>read : 라라벨, laravel 로 샘플 만들어 보자. (4)(end) view , controller : 기술 #라라벨 #laravel #샘플 #sample::공대여자홈</title>
+	<meta charset="utf-8">
+	<meta http-equiv="Content-Script-Type" content="text/javascript">
+	<meta http-equiv="Content-Style-Type" content="text/css">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+	<meta name="description" content="read : 라라벨, laravel 로 샘플 만들어 보자. (4)(end) view , controller : 기술 #라라벨 #laravel #샘플 #sample::공대여자홈" />
+	<meta name="keywords" content="라라벨,laravel,샘플,sample" />
+	<meta name="classification" content="웹 프로그래밍" />
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+	<!-- 합쳐지고 최소화된 최신 CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" class="mb_wysiwyg_head_css">
+	<!-- 부가적인 테마 -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css"  class="mb_wysiwyg_head_css">
+	<!-- Jquery : not support < IE9-->
+	<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+	<!-- 합쳐지고 최소화된 최신 자바스크립트 -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
+	<!-- https://angularjs.org/ -->
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular-sanitize.js"></script>
+
+
+
+
+	<link rel="stylesheet" href="/mh/css/vendor/mins01.com/m-onoff.css">
+	<link rel="stylesheet" href="/mh/css/bootstrap/bootstrap-select.min.css">
+	<link rel="stylesheet" href="/mh/css/mh.css">
+
+	<script src="/mh/js/bootstrap/bootstrap-select.min.js"></script>
+	<script src="/mh/js/mh_lib.js"></script>
+	<script src="/mh/js/mh_def.js"></script>
+
+
+	<!-- meta og -->
+
+	<meta property="og:title" content="공대여자 홈 : 기술 : 라라벨, laravel 로 샘플 만들어 보자. (4)(end) view , controller">
+		<meta property="og:description" content="읽기 : 라라벨, laravel 로 샘플 만들어 보자. (4)(end) view , controller #라라벨 #laravel #샘플 #sample">
+		<meta property="og:image" content="http://www.mins01.com/img/logo.gif">
+		<meta property="og:image:width" content="190">
+		<meta property="og:image:height" content="70" />
+		<meta property="og:site_name" content="공대여자 홈" />
+		<meta property="og:type" content="website">
+	
+	<!-- //meta og -->
+
+	
+<!-- 게시판 추가 head_contents -->
+
+<script type="text/javascript" src="/web_work/js/_M/_M.js"></script>
+<script type="text/javascript" src="/web_work/js/_M/UI/_M.UI.js"></script>
+<link rel="stylesheet" type="text/css" href="/web_work/js/_M/UI/POPLAYER/_M.UI.POPLAYER.css"/>
+<script type="text/javascript" src="/web_work/js/_M/UI/POPLAYER/_M.UI.POPLAYER.js"></script>
+<link href="/web_work/mb_wysiwyg_dom/mb_wysiwyg.css" rel="stylesheet" type="text/css" />
+
+<!-- MultipleInputBox -->
+<link rel="stylesheet" type="text/css" href="http://www.mins01.com/mh/etcmodule/ui_MultipleInputBox/MultipleInputBox.css"/>
+<script src="http://www.mins01.com/mh/etcmodule/ui_MultipleInputBox/MultipleInputBox.js"></script>
+
+
+
+
+<!-- //게시판 추가 head_contents -->
+<link href="http://www.mins01.com/mh/css/bbs/skin/bbs_skin_default.css" rel="stylesheet"  class="mb_wysiwyg_head_css">
+<link href="http://www.mins01.com/mh/css/bbs/skin/calendar/bbs_skin_calendar.css" rel="stylesheet"  class="mb_wysiwyg_head_css">
+<!-- for RSS -->
+<link rel="alternate" type="application/rss+xml" title="RSS : 기술" href="http://www.mins01.com/mh/tech/list?lm=rss" />
+
+<script type="text/javascript"
+	  src="https://maps.googleapis.com/maps/api/js?v=3.exp&amp;key=AIzaSyBw8nAJOdLCqN3DuGZJKvY0idP_QWRR5WM&amp;libraries=places"></script>
+<script src="http://www.mins01.com/mh/js/bbs/google_map.js"></script>
+
+<script src="http://www.mins01.com/mh/js/bbs/comment.js"></script>
+
+<script src="http://www.mins01.com/mh/js/bbs/script.js"></script>
+<script>
+/**
+* 스킨 전용 기능
+*/
+//--- 장소 확인 구글맵 띄우기
+function showMapByAddress(address,lat,Lng){
+	if(!address || address.length<1){
+		alert('확인할 주소가 너무 짧습니다.');
+		return false;
+	}
+	var latLng = '';
+	if(lat.length>1 && Lng.length>1){
+		latLng =lat+','+Lng;
+	}
+	var url = "/web_work/google_apis/maps/maps.php?address="+encodeURIComponent(address)+'&latLng='+encodeURIComponent(latLng);
+	window.open(url,'pop_showMapByAddress',"width=800,height=600");
+}
+</script>
+
+
+
+	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+	<!--[if lt IE 9]>
+		<script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+		<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+	<![endif]-->
+
+	</head>
+<body>
+	<nav class="navbar navbar-default  navbar-absolute-top" role="navigation">
+		<div class="container-fluid ">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="/" style="margin: 0;padding: 3px"><img src="/img/logo.gif" style="max-height: 100%;" alt="logo image"></a>
+				<a class="navbar-brand hidden-sm hidden-md hidden-lg " href="/mh/">메인</a>
+				<a class="navbar-brand hidden-sm hidden-md hidden-lg " href="/mh/tech">기술</a>
+			</div>
+			<div id="navbar" class="collapse navbar-collapse">
+				<ul class="nav navbar-nav navbar-left">
+										<li ><a href="/mh/" >메인</a></li>
+										<li class="active"><a href="/mh/tech" >기술</a></li>
+										<li ><a href="/mh/lecture" >강좌</a></li>
+										<li ><a href="/mh/mono" >잡담</a></li>
+										<li ><a href="/mh/free" >자유</a></li>
+										<li ><a href="/mh/gallery" >갤러리</a></li>
+										<li ><a href="/mh/calendar" >일정</a></li>
+										<li ><a href="/mh/there" >밥집</a></li>
+										<li ><a href="/mh/comp" >업무용</a></li>
+									</ul>
+				<div class="navbar-right">
+										<p class="navbar-text text-right "><a href="http://www.mins01.com/mh/member/user_info"><span class="glyphicon glyphicon-user"></span>공대여자</a>님 <button class="btn btn-info btn-xs" onclick="window.open('http://www.mins01.com/mh/member/logout','_self')">로그아웃</button></p>
+									</div>
+			</div><!--/.nav-collapse -->
+		</div>
+	</nav>
+
+	<div style="width:320px;margin:2px auto" class="google_ad"><script type="text/javascript"><!--
+	google_ad_client = "ca-pub-5804424351292113";
+	/* 320모바일 */
+	google_ad_slot = "5262485004";
+	google_ad_width = 320;
+	google_ad_height = 50;
+	//-->
+</script>
+<script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script></div>
+
+	<div class="container-fluid contents">
+
+	
+
+<div class="panel panel-default  bbs-mode-read">
+	<div class="panel-heading bbs-flex-box  bbs-flex-center">
+		<h3 class="text-center bbs-title bbs-text-border-fff">
+			라라벨, laravel 로 샘플 만들어 보자. (4)(end) view , controller		</h3>
+		
+		<div class="bbs-info-labels bbs-flex-sub bbs-flex-sub-right">
+									
+							<span class="bc_cnt label label-default" title="2 댓글">2</span>
+					</div>
+		
+	</div>
+	<div class="text-right panel-body p-5px ">
+		
+				<a href="http://www.mins01.com/mh/tech/list" class="btn btn-xs btn-primary glyphicon glyphicon-list"> 목록</a>
+						<a href="http://www.mins01.com/mh/tech/answer/1245"  class="btn btn-xs btn-info glyphicon glyphicon-pencil"> 답변</a>
+				<div class="btn-group" role="group" aria-label="">
+			
+						<a href="http://www.mins01.com/mh/tech/edit/1245"  class="btn btn-xs btn-warning glyphicon glyphicon-pencil"> 수정</a>
+									<a href="http://www.mins01.com/mh/tech/delete/1245"  class="btn btn-xs btn-danger glyphicon glyphicon-remove"> 삭제</a>
+					</div>
+	</div>
+	<ul class="list-group">
+		<li class="list-group-item form-inline">
+			<div class="input-group">
+				<span class="input-group-addon" >작성자</span>
+				<span class="form-control" >공대여자</span>
+			</div>
+			
+			<p class="pull-right form-control-static">
+																				<span class="label label-info ">작성 : 01-11 11:16</span>
+				<span class="label label-info ">조회 : 140</span>
+			</p>
+			<span class="clearfix"></span>
+		</li>
+		<li class="list-group-item form-inline">
+			<div class="input-group ">
+				<span class="input-group-addon">지남</span>
+				<span class="form-control">1일간</span>
+			</div>
+			<div class="input-group input-daterange">
+				<span class="form-control" >2019-01-11</span>
+				<span class="input-group-addon">-</span>
+				<span class="form-control" >2019-01-11</span>
+			</div>
+							
+			<div class="input-group hide">
+				<span class="input-group-addon">좌표</span>
+				<span class="form-control"></span>
+			</div>
+			
+		</li>
+				
+		
+				<li class="list-group-item form-inline bbs-mode-read-file">
+			<script>
+$(function(){
+	$('.iframe_htmlOgp').on('load',function(){
+		var fn = function(thisc){
+			return function(){
+				// console.log(this);
+				if($(thisc.contentWindow.document).find('.container-fluid').length>0){
+					var h = $(thisc.contentWindow.document).find('.container-fluid').prop('scrollHeight');
+					$(thisc).removeClass('pre-hide');
+					thisc.style.height = (h+10)+'px';
+					thisc.style.opacity = 1;
+					thisc.style.zIndex = 1;	
+					
+				}else{
+					thisc.style.display = 'none';
+					$(thisc).parent().remove();
+					
+				}
+			}
+		}(this);
+		setTimeout(fn,200)
+
+	})
+})
+</script>
+<div class="row bbs-files">
+<input type="hidden" name="bf_idx" value="" disabled>
+	<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3  mode-read-file-item">
+	첨부된 파일이 없습니다.
+	</div>
+</div>
+<script>
+//첨부파일 미리보기 처리
+	function bbs_form_file_item_oncahngeUpload(event){
+		try{
+			var ta = event.target;
+			var preview = $(ta).parents('.mode-form-file-item').find('.img-preview-upload');
+			preview.html('');
+			if(ta.files.length > 0){ //파일 업로드가 있을 경우만
+				for(var i=0,m=ta.files.length;i<m;i++){ //다중 셀렉트 가능.
+					var file = ta.files[i];
+					var num = i;
+					if(file.type.indexOf('image')===-1){
+
+						if(preview.html().length>1){
+							$(preview).append('<hr>');
+						}
+						$(preview).append('<div class="text-danger">파일'+(num+1)+'</div><div>'+file.name+'</div><div>'+file.size+' Byte</div>');
+
+
+						continue;
+					}
+					(function(file,num){
+						var fileReader = new FileReader();
+						fileReader.onload = function (event) {
+							var ta = event.target;
+							var img = new Image();
+							$(img).attr('data-num',num);
+							img.src = ta.result;
+							if(m>1){
+								if(preview.html().length>1){
+									$(preview).append('<hr>');
+								}
+							}
+							$(preview).append('<div class="text-primary preview_text">파일'+(num+1)+' <a href="/WC2/WC2.html" target="_blank" class="btn btn-success btn-xs">수정</a></div>');
+
+
+							$(preview).find('.preview_text a.btn').get(0).onclick=function(img){
+								return function(){
+									set_wc2cb(img);
+								}
+							}(img);;
+							$(preview).append(img);
+						};
+						fileReader.readAsDataURL(file);
+					})(ta.files[i],num)
+				}
+			}else{
+				preview.html('Select File... or Drop File...');
+			}
+		}catch(e){
+			//지원안되는 브라우저
+		}
+	}
+
+
+/**
+ * 파일 업로드 관련
+ */
+function init_drag_and_drop_file(){
+	$('.drag-and-drop-files').on("dragstart dragend dragover dragenter dragleave drag drop",function(evt){
+		console.log(evt.type);
+		evt.preventDefault();
+		evt.stopPropagation();
+	})
+	$('.drag-and-drop-files').on("drop",function(evt){
+		try{
+			console.log(evt.originalEvent.dataTransfer.files);
+			$(this).find('input[type="file"]').prop('files',evt.originalEvent.dataTransfer.files)
+			// $(this).find('input[type="file"]').trigger('change');
+		}catch(e){
+			//지원 안되는 브라우저
+		}
+	})
+}
+function set_wc2cb(img){
+	WC2CB.img = img;
+}
+//웹 에디터 콜백
+var WC2CB = {
+	"img":null,
+	"getImage":function(){
+		return this.img;
+	},
+	"btnFileSaveCallback":function(win,wc2){
+		// var dataUrl = wc2.activeWcb.toDataURL()
+		var dataUrl = wc2.getDataurlForFileSavePreview();
+		var $p = $(this.img).parents('.mode-form-file-item');
+		$p.find('select.ext_urls_types').val('attach/dataurl').get(0).onchange();
+		$p.find('input.ext_urls-dataurl').val(dataUrl);
+		// $p.find("img.attach-dataurl-dataurl").prop("src",dataUrl);
+		var img = new Image();
+		$(img).prop('src',dataUrl);
+		$p.find('.img-preview-dataurl').html("")
+		.append('<div class="text-primary preview_text">파일'+' <a href="/WC2/WC2.html" target="_blank" class="btn btn-success btn-xs">수정</a></div>')
+		.append(img);
+
+
+
+		$p.find('.img-preview-dataurl .preview_text a.btn').get(0).onclick=function(img){
+			return function(){
+				set_wc2cb(img);
+			}
+		}(img);;
+
+		win.close();
+	}
+};
+
+</script>
+		</li>
+			</ul>
+	<div class="panel-body" style="min-height:200px">
+				<div class=" text-right bt_tags  text-right">
+			<span class="bt_cnt label label-default" title="tag: 4">tag:4</span>
+									<a class="bt_tag label  label-success" href="http://www.mins01.com/mh/tech/list?tq=tag&q=%EB%9D%BC%EB%9D%BC%EB%B2%A8">#라라벨</a>
+									<a class="bt_tag label  label-success" href="http://www.mins01.com/mh/tech/list?tq=tag&q=laravel">#laravel</a>
+									<a class="bt_tag label  label-success" href="http://www.mins01.com/mh/tech/list?tq=tag&q=%EC%83%98%ED%94%8C">#샘플</a>
+									<a class="bt_tag label  label-success" href="http://www.mins01.com/mh/tech/list?tq=tag&q=sample">#sample</a>
+						</div>
+				<div class="contents-area">
+				<h3>controller 수정</h3><div>app\Http\Controllers\SimpleCommentController.php</div><div><br></div><div><div></div><code><div>&lt;?php</div><div><br></div><div>namespace App\Http\Controllers;</div><div><br></div><div>use App\SimpleComment;</div><div>use Illuminate\Http\Request;</div><div><br></div><div>class SimpleCommentController extends Controller</div><div>{</div><div>&nbsp; /**</div><div>&nbsp; * Display a listing of the resource.</div><div>&nbsp; *</div><div>&nbsp; * @return \Illuminate\Http\Response</div><div>&nbsp; */</div><div>&nbsp; public function index()</div><div>&nbsp; {</div><div>&nbsp; &nbsp; return [</div><div>&nbsp; &nbsp; &nbsp; 'result'=&gt;true,</div><div>&nbsp; &nbsp; &nbsp; 'count' =&gt; SimpleComment::count(),</div><div>&nbsp; &nbsp; &nbsp; 'simpleComments' =&gt; SimpleComment::lists(),</div><div>&nbsp; &nbsp; ];</div><div>&nbsp; &nbsp; // return View('sc/index');</div><div>&nbsp; &nbsp; //</div><div>&nbsp; }</div><div>&nbsp;&nbsp;</div><div>&nbsp; /**</div><div>&nbsp; * Store a newly created resource in storage.</div><div>&nbsp; *</div><div>&nbsp; * @param&nbsp; \Illuminate\Http\Request&nbsp; $request</div><div>&nbsp; * @return \Illuminate\Http\Response</div><div>&nbsp; */</div><div>&nbsp; public function store(Request $request)</div><div>&nbsp; {</div><div>&nbsp; &nbsp; //</div><div>&nbsp; }</div><div>&nbsp;&nbsp;</div><div>&nbsp; /**</div><div>&nbsp; * Display the specified resource.</div><div>&nbsp; *</div><div>&nbsp; * @param&nbsp; \App\SimpleComment&nbsp; $simpleComment</div><div>&nbsp; * @return \Illuminate\Http\Response</div><div>&nbsp; */</div><div>&nbsp; public function show(SimpleComment $simpleComment)</div><div>&nbsp; {</div><div>&nbsp; &nbsp; //</div><div>&nbsp; }</div><div>&nbsp;&nbsp;</div><div>&nbsp; /**</div><div>&nbsp; * Update the specified resource in storage.</div><div>&nbsp; *</div><div>&nbsp; * @param&nbsp; \Illuminate\Http\Request&nbsp; $request</div><div>&nbsp; * @param&nbsp; \App\SimpleComment&nbsp; $simpleComment</div><div>&nbsp; * @return \Illuminate\Http\Response</div><div>&nbsp; */</div><div>&nbsp; public function update(Request $request, SimpleComment $simpleComment)</div><div>&nbsp; {</div><div>&nbsp; &nbsp; if(!$simpleComment-&gt;checkScPass($request-&gt;input('sc_pass'))){</div><div>&nbsp; &nbsp; &nbsp; return [</div><div>&nbsp; &nbsp; &nbsp; &nbsp; 'result'=&gt;false,</div><div>&nbsp; &nbsp; &nbsp; &nbsp; 'message'=&gt;'Incorrect password',</div><div>&nbsp; &nbsp; &nbsp; ];</div><div>&nbsp; &nbsp; }</div><div>&nbsp; &nbsp; $simpleComment-&gt;update($request-&gt;all());</div><div>&nbsp; &nbsp; return $this-&gt;index();</div><div>}</div><div>&nbsp;&nbsp;</div><div>&nbsp; /**</div><div>&nbsp; * Remove the specified resource from storage.</div><div>&nbsp; *</div><div>&nbsp; * @param&nbsp; \App\SimpleComment&nbsp; $simpleComment</div><div>&nbsp; * @return \Illuminate\Http\Response</div><div>&nbsp; */</div><div>&nbsp; //&nbsp;<span style="font-size: 12.6px;">$request 를 추가, 제어 역전으로 알아서 데이터를 전달 해 준다.</span></div><div><div>&nbsp; public function destroy(Request $request, SimpleComment $simpleComment)</div><div>&nbsp; {</div><div>&nbsp; &nbsp; if(!$simpleComment-&gt;checkScPass($request-&gt;input('sc_pass'))){</div><div>&nbsp; &nbsp; &nbsp; return [</div><div>&nbsp; &nbsp; &nbsp; &nbsp; 'result'=&gt;false,</div><div>&nbsp; &nbsp; &nbsp; &nbsp; 'message'=&gt;'Incorrect password',</div><div>&nbsp; &nbsp; &nbsp; ];</div><div>&nbsp; &nbsp; }</div><div>&nbsp; &nbsp; $simpleComment-&gt;delete();</div><div>&nbsp; &nbsp; return $this-&gt;index();</div><div>&nbsp; }</div></div><div>}</div></code><div></div></div><h3>API쪽 route 수정 (경로가 모델명에 안 맞으면 컨트롤러에서 모델을 제대로 못 가져옮)</h3><div>routes\api.php</div><div><br></div><div></div><code><div><strike>Route::resource('sc', 'SimpleCommentController');</strike></div><div>Route::resource('simpleComment', 'SimpleCommentController');</div></code><div></div><h3>web 쪽 route 추가</h3><div>routes\web.php</div><div><code>Route::any('/sc','WebSimpleCommentController@index');</code></div><div><br></div><h3>web 쪽 controller 추가</h3><div></div><code><div>app\Http\Controllers\WebSimpleCommentController.php</div><div><div>&lt;?php</div><div><br></div><div>namespace App\Http\Controllers;</div><div><br></div><div>use Illuminate\Http\Request;</div><div><br></div><div>class WebSimpleCommentController extends Controller</div><div>{</div><div><span style="white-space:pre">	</span>protected $title='SimpleComment';</div><div>&nbsp; &nbsp; public function index($value='')</div><div>&nbsp; &nbsp; {</div><div>&nbsp; &nbsp; <span style="white-space:pre">	</span>return View('sc.lists',['title'=&gt;$this-&gt;title]);</div><div>&nbsp; &nbsp; }</div><div>}</div></div></code><h3>web 쪽 view 파일</h3><div><div>resources\views\sc\lists.blade.php</div><div><div></div><code style="font-size: 12.6px;"><div>@extends('sc.master')</div><div><br></div><div>@section('title', $title)</div><div><br></div><div>@section('content')</div><div><span style="white-space: pre;">	</span>&lt;h1&gt;SimpleComment&lt;/h1&gt;</div><div><span style="white-space: pre;">	</span>&lt;div id="sc_app"&gt;</div><div><span style="white-space: pre;">		</span>&lt;ul class="list-group"&nbsp; v-for="sc in res.simpleComments"&gt;</div><div><span style="white-space: pre;">			</span>&lt;li class="list-group-item"&gt;</div><div><span style="white-space: pre;">				</span>&lt;form onsubmit="ajax_action.action(this);return false;" action="{{ route('simpleComment.update',':sc_id') }}"&gt;</div><div><span style="white-space: pre;">					</span>{{ csrf_field() }}</div><div><span style="white-space: pre;">					</span>&lt;input type="text" name="_method" disabled value="" /&gt;</div><div><span style="white-space: pre;">					</span>&lt;input type="text" name="sc_id" readonly v-model="sc.sc_id" /&gt;</div><div><span style="white-space: pre;">					</span>&lt;input type="password" name="sc_pass"/&gt;</div><div><span style="white-space: pre;">					</span>&lt;input type="text" name="sc_name" v-model="sc.sc_name" /&gt;</div><div><span style="white-space: pre;">					</span>&lt;input type="text" name="sc_comment" v-model="sc.sc_comment" /&gt;</div><div><span style="white-space: pre;">					</span>&lt;input disabled type="created_at" v-model="sc.created_at" /&gt;</div><div><span style="white-space: pre;">					</span>&lt;input disabled type="updated_at" v-model="sc.updated_at" /&gt;</div><div><span style="white-space: pre;">					</span>&lt;button onclick="this.form._method.value='PUT'"&gt;modify&lt;/button&gt;</div><div><span style="white-space: pre;">					</span>&lt;button onclick="this.form._method.value='DELETE'"&gt;delete&lt;/button&gt;</div><div><br></div><div><span style="white-space: pre;">				</span>&lt;/form&gt;</div><div><span style="white-space: pre;">			</span>&lt;/li&gt;</div><div><span style="white-space: pre;">		</span>&lt;/ul&gt;<span style="white-space: pre;">	</span></div><div><span style="white-space: pre;">	</span>&lt;/div&gt;</div><div><span style="white-space: pre;">	</span>&lt;script&gt;</div><div><span style="white-space: pre;">	</span>window.Laravel = {!! json_encode([</div><div><span style="white-space: pre;">	</span>&nbsp;'csrfToken' =&gt; csrf_token(),</div><div><span style="white-space: pre;">	</span>]) !!};</div><div>&nbsp; &nbsp; &nbsp; &nbsp; // vue.js의 app을 생성</div><div><span style="white-space: pre;">	</span>var sc_app = new Vue({</div><div><span style="white-space: pre;">		</span>el: '#sc_app',</div><div><span style="white-space: pre;">		</span>data: {</div><div><span style="white-space: pre;">			</span>res:{'result':null,message:'','count':0,'simpleComments':[]},</div><div><span style="white-space: pre;">		</span>}</div><div><span style="white-space: pre;">	</span>})</div><div><span style="white-space: pre;">	</span>$(function(){</div><div><span style="white-space: pre;">		</span>ajax_action.lists();</div><div><span style="white-space: pre;">	</span>})</div><div><span style="white-space: pre;">	</span>var ajax_action = {</div><div><span style="white-space: pre;">		</span>"lists":function(){</div><div><span style="white-space: pre;">			</span>var url = "{{ route('simpleComment.index') }}";</div><div><span style="white-space: pre;">			</span>$.ajax({</div><div><span style="white-space: pre;">				</span>url: url,</div><div><span style="white-space: pre;">				</span>type: 'GET', //GET</div><div><span style="white-space: pre;">				</span>dataType: 'json', //xml, json, script, jsonp, or html</div><div><span style="white-space: pre;">				</span>// data: post_data,</div><div><span style="white-space: pre;">			</span>})</div><div><span style="white-space: pre;">			</span>.done(function(rData) { //통신 성공 시 호출</div><div><span style="white-space: pre;">				</span>console.log("success");</div><div><span style="white-space: pre;">				</span>if(!rData.result){</div><div><span style="white-space: pre;">					</span>alert(rData.message)</div><div><span style="white-space: pre;">				</span>}else{</div><div><span style="white-space: pre;">					</span>sc_app.res = rData;</div><div><span style="white-space: pre;">				</span>}</div><div><span style="white-space: pre;">			</span>})</div><div><span style="white-space: pre;">			</span>.fail(function() { //통신 실패 시 호출</div><div><span style="white-space: pre;">				</span>console.log("error");</div><div><span style="white-space: pre;">			</span>})</div><div><span style="white-space: pre;">			</span>.always(function() { //성공/실패 후 호출.</div><div><span style="white-space: pre;">				</span>console.log("complete");</div><div><span style="white-space: pre;">			</span>});</div><div><span style="white-space: pre;">		</span>},</div><div><span style="white-space: pre;">		</span>"action":function(f){</div><div><span style="white-space: pre;">			</span>var url = f.action.replace(":sc_id",f.sc_id.value);</div><div><span style="white-space: pre;">			</span>var post_data = $(f).serialize();</div><div><span style="white-space: pre;">			</span>$.ajax({</div><div><span style="white-space: pre;">				</span>url: url,</div><div><span style="white-space: pre;">				</span>type: f._method.value, //GET</div><div><span style="white-space: pre;">				</span>dataType: 'json', //xml, json, script, jsonp, or html</div><div><span style="white-space: pre;">				</span>data: post_data,</div><div><span style="white-space: pre;">			</span>})</div><div><span style="white-space: pre;">			</span>.done(function(rData) { //통신 성공 시 호출</div><div><span style="white-space: pre;">				</span>console.log("success");</div><div><span style="white-space: pre;">				</span>if(!rData.result){</div><div><span style="white-space: pre;">					</span>alert(rData.message)</div><div><span style="white-space: pre;">				</span>}else{</div><div><span style="white-space: pre;">					</span>sc_app.res = rData;</div><div><span style="white-space: pre;">				</span>}</div><div><span style="white-space: pre;">			</span>})</div><div><span style="white-space: pre;">			</span>.fail(function(e) { //통신 실패 시 호출</div><div><span style="white-space: pre;">				</span>console.log(e);</div><div><span style="white-space: pre;">			</span>})</div><div><span style="white-space: pre;">			</span>.always(function() { //성공/실패 후 호출.</div><div><span style="white-space: pre;">				</span>console.log("complete");</div><div><span style="white-space: pre;">			</span>});</div><div><span style="white-space: pre;">			</span>f._method.value = '';</div><div><span style="white-space: pre;">		</span>}</div><div><span style="white-space: pre;">	</span>}</div><div><span style="white-space: pre;">	</span>&lt;/script&gt;</div><div><br></div><div><span style="white-space: pre;">	</span>&lt;code style="white-space:pre"&gt;</div><div><span style="white-space: pre;">	</span>API LISTS</div><div><span style="white-space: pre;">	</span>+--------+-----------+------------------+------------+------------------------------------------------------+------------+</div><div><span style="white-space: pre;">	</span>| Domain | Method&nbsp; &nbsp; | URI&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | Name&nbsp; &nbsp; &nbsp; &nbsp;| Action&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| Middleware |</div><div><span style="white-space: pre;">	</span>+--------+-----------+------------------+------------+------------------------------------------------------+------------+</div><div><span style="white-space: pre;">	</span>|&nbsp; &nbsp; &nbsp; &nbsp; | GET|HEAD&nbsp; | api/sc&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| sc.index&nbsp; &nbsp;| App\Http\Controllers\SimpleCommentController@index&nbsp; &nbsp;| api&nbsp; &nbsp; &nbsp; &nbsp; |</div><div><span style="white-space: pre;">	</span>|&nbsp; &nbsp; &nbsp; &nbsp; | POST&nbsp; &nbsp; &nbsp; | api/sc&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;| sc.store&nbsp; &nbsp;| App\Http\Controllers\SimpleCommentController@store&nbsp; &nbsp;| api&nbsp; &nbsp; &nbsp; &nbsp; |</div><div><span style="white-space: pre;">	</span>|&nbsp; &nbsp; &nbsp; &nbsp; | GET|HEAD&nbsp; | api/sc/create&nbsp; &nbsp; | sc.create&nbsp; | App\Http\Controllers\SimpleCommentController@create&nbsp; | api&nbsp; &nbsp; &nbsp; &nbsp; |</div><div><span style="white-space: pre;">	</span>|&nbsp; &nbsp; &nbsp; &nbsp; | GET|HEAD&nbsp; | api/sc/{sc}&nbsp; &nbsp; &nbsp; | sc.show&nbsp; &nbsp; | App\Http\Controllers\SimpleCommentController@show&nbsp; &nbsp; | api&nbsp; &nbsp; &nbsp; &nbsp; |</div><div><span style="white-space: pre;">	</span>|&nbsp; &nbsp; &nbsp; &nbsp; | PUT|PATCH | api/sc/{sc}&nbsp; &nbsp; &nbsp; | sc.update&nbsp; | App\Http\Controllers\SimpleCommentController@update&nbsp; | api&nbsp; &nbsp; &nbsp; &nbsp; |</div><div><span style="white-space: pre;">	</span>|&nbsp; &nbsp; &nbsp; &nbsp; | DELETE&nbsp; &nbsp; | api/sc/{sc}&nbsp; &nbsp; &nbsp; | sc.destroy | App\Http\Controllers\SimpleCommentController@destroy | api&nbsp; &nbsp; &nbsp; &nbsp; |</div><div><span style="white-space: pre;">	</span>|&nbsp; &nbsp; &nbsp; &nbsp; | GET|HEAD&nbsp; | api/sc/{sc}/edit | sc.edit&nbsp; &nbsp; | App\Http\Controllers\SimpleCommentController@edit&nbsp; &nbsp; | api&nbsp; &nbsp; &nbsp; &nbsp; |</div><div><span style="white-space: pre;">	</span>+--------+-----------+------------------+------------+------------------------------------------------------+------------+</div><div><span style="white-space: pre;">	</span>&lt;/code&gt;</div><div>@endsection</div><div><br></div></code><div></div></div></div>		</div>
+		
+	</div>
+	<div class="panel-footer text-right">
+		
+				<a href="http://www.mins01.com/mh/tech/list" class="btn btn-sm btn-primary glyphicon glyphicon-list"> 목록</a>
+						<a href="http://www.mins01.com/mh/tech/answer/1245"  class="btn btn-sm btn-info glyphicon glyphicon-pencil"> 답변</a>
+				<div class="btn-group" role="group" aria-label="">
+			
+						<a href="http://www.mins01.com/mh/tech/edit/1245"  class="btn btn-sm btn-warning glyphicon glyphicon-pencil"> 수정</a>
+									<a href="http://www.mins01.com/mh/tech/delete/1245"  class="btn btn-sm btn-danger glyphicon glyphicon-remove"> 삭제</a>
+					</div>
+		
+	
+	
+	</div>
+</div>
+
+
+
+<div ng-app="bbsComment" class="bbs_c">
+<div class="panel panel-default bbs-mode-comment"  ng-controller="CommentCtrl as commentCtrl" ng-init="commentCtrl.init('http://www.mins01.com/mh/bbs_comment/tech/1245','0')">
+	<div class="panel-heading">
+		댓글
+	</div>
+	<ul class="list-group">
+		<li class="list-group-item" ng-class="{'active':form.bc_idx==bc_row.bc_idx}"  ng-repeat="bc_row in bc_rows">
+			<div id="bc_idx_{{bc_row.bc_idx}}"  class=" bc_depth bc_depth-{{bc_row.depth | print_depth:10}}">
+				<dl class="form-inline">
+					<dt class="sc_title">
+						<a id="cmt_{{bc_row.bc_idx}}"  name="cmt_{{bc_row.bc_idx}}"></a>
+						<span class="nick bc_nick" ng-bind="bc_row.bc_name"  ng-class="{'bc_nick_guest':!bc_row.m_idx}" ng-attr-title="{{!bc_row.m_idx?'Guest는 수정 및 삭제 불가!':''}}"></span>
+						<span ng-hide="bc_row.bc_number &lt;= 0 || bm_use_commnet_number!='1'" >
+						/ <span class="bc_number bc-star-{{bc_row.bc_number}}"></span>
+						</span>
+						/ <span class="date bc_insert_date" ng-bind="bc_row.bc_insert_date|print_date"></span>
+						<div class="pull-right" >
+							<button ng-click="set_mode('answer',$index);" ng-show="permission.admin || permission.answer" type="button" class="btn btn-xs btn-success">답변</button>
+							<button ng-show="permission.admin || (bc_row.m_idx &amp;&amp; m_row.m_idx == bc_row.m_idx &amp;&amp; permission.edit )" ng-click="set_mode('edit',$index);" type="button" class="btn btn-xs btn-warning">수정</button>
+							<button ng-show="permission.admin || (bc_row.m_idx &amp;&amp; m_row.m_idx == bc_row.m_idx &amp;&amp; permission.delete )" ng-click="mode_delete($index);" type="button" class="btn btn-xs btn-danger">삭제</button>
+						</div>
+						<div class="clearfix"></div>
+					</dt>
+					<dd class="bc_comment" ng-hide="form.mode=='edit' &amp;&amp; form.bc_idx==bc_row.bc_idx"
+					ng-bind-html="bc_row.bc_comment | linky | nl2br | space2nbsp"></dd>
+				</dl>
+			</div>
+		</li>
+		<li class="list-group-item form-inline"  ng-if="bc_rows.length == 0">
+			<dl>
+				<dt class="sc_title">
+					No Nickname
+				</dt>
+				<dd class="bc_comment text-center">No Comment</dd>
+			</dl>
+		</li>
+		<li id="bc_idx_write" class="list-group-item" ng-class="{'active':!form.bc_idx}">
+			<div ng-if="form.mode!='write'" class="text-center">
+				<button type="button" class="btn btn-info" ng-click="set_mode('write','write')">새로운 댓글 작성</button>
+			</div>
+			<div ng-hide="permission.write" class="text-center">
+				권한이 없습니다.
+			</div>
+			<form  ng-hide="!permission[form.mode]"  name="wform" ng-submit="submitComment()" ng-class="{'wform-answer':form.mode=='answer'}">
+				<input type="hidden" class="form-control" ng-model="form.mode" name="mode" value="write">
+				<input type="hidden" class="form-control" ng-model="form.bc_idx" name="bc_idx" value="">
+				<dl>
+					<dt ng-show="form.mode!='edit'" class="sc_title form-control-static">
+								<span ng-if="m_row.m_idx" class="nick bc_nick">{{m_row.m_nick}}</span>
+								<span  ng-if="!m_row.m_idx" class="form-inline">
+									<input type="text" class="form-control" maxlength="50" required placeholder="nick" ng-model="form.bc_name"  name="bc_name" value="">
+																	</span>
+					</dt>
+					<dd class="bc_comment">
+					<div class="form-group">
+						<textarea
+						ng-maxlength="60000"
+						ng-disabled="form.mode=='delete' || !permission[form.mode]"
+						ng-model="form.bc_comment"
+						ng-trim="true"
+						name="bc_comment"  class="form-control" rows="3" placeholder="댓글내용" required onkeyup="sync_textarea_height(this)" onblur="this.onkeyup()" onfocus="this.onkeyup()" style="line-height: 1.5em;max-height: 20em; min-height: 6em"></textarea>
+						<div role="alert">
+						<div class="alert alert-danger" role="alert" ng-show="wform.bc_comment.$error.maxlength">내용이 너무 많습니다!</div>
+						</div>
+					</div>
+					<div class="form-inline text-right">
+						<span ng-show="msg.length&gt;0" ng-bind="msg">-</span>
+						<div class="form-group" >
+							<select ng-model="form.bc_number"
+							ng-disabled="bm_use_commnet_number!='1'"
+							ng-hide="bm_use_commnet_number!='1'"
+							name="bc_number" class="form-control input-sm" style="width:9em">
+									<option value="0" class="bc-star bc-star-0" ng-selected="!form.bc_number">no-star</option>
+									<option value="1" class="bc-star bc-star-1">★☆☆☆☆</option>
+									<option value="2" class="bc-star bc-star-2">★★☆☆☆</option>
+									<option value="3" class="bc-star bc-star-3">★★★☆☆</option>
+									<option value="4" class="bc-star bc-star-4">★★★★☆</option>
+									<option value="5" class="bc-star bc-star-5">★★★★★</option>
+								</select>
+							<button ng-disabled="!wform.$valid" type="submit" class="btn btn-warning">확인</button>
+						</div>
+					</div>
+					</dd>
+				</dl>
+			</form>
+		</li>
+	</ul>
+</div>
+</div>
+<script>
+	/**
+	 * 텍스트박스 높이 맞추기.
+	 * @param  {[type]} el [description]
+	 * @return {[type]}    [description]
+	 */
+	function sync_textarea_height(el){
+		var nl_cnt = el.value.split("\n").length;
+		el.style.height = ((nl_cnt+2)*1.5)+'em';
+	}
+</script>
+<script>
+ng_bbs_comment('bbsComment','CommentCtrl');
+</script>
+
+<nav class="text-right">
+	게시물 : 1199 (80 page)
+	<a href="?lm=calendar" type="button" class="btn btn-link btn-xs">📅 달력형</a>
+	<a target="_blank" href="http://www.mins01.com/mh/tech/list?lm=rss" type="button" class="btn btn-link btn-xs"><span class="glyphicon bbs_feed_icon_14x14"></span> RSS</a>
+</nav>
+<div class="panel panel-default bbs-mode-list">
+	<!-- Default panel contents -->
+	<div class="panel-heading ">
+		<div class="row visible-lg-block">
+			<div class="col-lg-2 col-sm-2 hidden-xs">
+			</div>
+			<div class="col-lg-8 col-sm-8 ">
+				<form action="http://www.mins01.com/mh/tech/list" class="form-inline text-center form-search">
+			<datalist class="tag_lists" id="tag_lists">
+		<option value="tag_elements"></option>
+	</datalist>
+	<script>
+	$(function(){
+		if(!$('datalist.tag_lists').get(0).load){
+			$('datalist.tag_lists').get(0).load = true;
+			var tag_lists_url = "http:\/\/www.mins01.com\/mh\/tech\/tag_lists";
+			load_tag_lists(tag_lists_url)	
+		}
+		
+	})
+	</script>
+	<div class="input-group">
+		<span class="input-group-addon">
+			tag
+		</span>
+		<input name="tag" list="tag_lists" aria-label="tag" type="search" class="form-control " placeholder="tag" value="">
+	</div><!-- /input-group -->
+		<div class="form-group">
+
+		<div class="input-group">
+			<div class="input-group-btn">
+			
+								<select name="tq" class="form-control btn btn-default" style="max-width:8em" aria-label="검색대상" >
+				<option value="title" >제목</option>
+				<option value="text" >내용</option>
+				<option value="tt" >제목+내용</option>
+				<option value="ttc" >제목+내용+코멘트</option>				<option value="name" >작성자</option>
+				<option value="tag" >태그</option>				</select>
+				
+			</div>
+		</div>
+		<div class="input-group">
+			<input name="q" aria-label="검색어" type="search" class="form-control " placeholder="검색어" value="">
+			<span class="input-group-btn">
+				<button type="submit" class="btn btn-info">검색</button>
+			</span>
+		</div><!-- /input-group -->
+	</div>
+</form>			</div>
+			<div class="col-lg-2 col-sm-2 text-right">
+								<a href="http://www.mins01.com/mh/tech/write" class="btn btn-success glyphicon glyphicon-pencil"> 작성</a>
+							</div>
+
+		</div>
+	</div>
+	<div class="table-responsive">
+		<table class="table table-condensed bbs-list-table" style="table-layout:fixed">
+			<tr >
+				<th class="text-center hidden-xs" width="80">No</th>
+				<th class="text-center">제목</th>
+				<th class="text-center" width="80">작성자</th>
+				<th class="text-center"  width="80">날짜</th>
+				<th class="text-center hidden-xs hidden-sm"  width="40">조회</th>
+			</tr>
+					<tr class="bbs-notice info  ">
+				<td class="text-center hidden-xs"><span class="label label-danger">공지</span></td>
+				<td class="">
+					<div class="bbs-flex-box">
+												<span class="bbs-title "><a href="http://www.mins01.com/mh/tech/read/1205" >[기본형] HTML (with 부트스트랩4.1.3 , jquery 3.3.1, vue.js)</a></span>
+						<span class="bbs-info-labels bbs-flex-sub bbs-flex-sub-right">
+																						
+																				</span>	
+					</div>
+											<div class="bt_tags text-right">
+							<span class="bt_cnt label label-default" title="tag: 4">tag:4</span>
+													<a class="bt_tag label  label-success" href="http://www.mins01.com/mh/tech/list?tq=tag&q=bootstrap4">#bootstrap4</a>
+														<a class="bt_tag label  label-success" href="http://www.mins01.com/mh/tech/list?tq=tag&q=default">#default</a>
+														<a class="bt_tag label  label-success" href="http://www.mins01.com/mh/tech/list?tq=tag&q=html5">#html5</a>
+														<a class="bt_tag label  label-success" href="http://www.mins01.com/mh/tech/list?tq=tag&q=%EA%B8%B0%EB%B3%B8%ED%98%95">#기본형</a>
+													</div>
+											
+
+				</td>
+				<td class="text-center text-overflow-ellipsis">공대여자</td>
+								<td class="text-center b_date"><span class="b_date_st">18-10-17</span><span class="b_date_ed">10-17</span></td>
+				<td class="text-center hidden-xs hidden-sm"><small>5602</small></td>
+			</tr>
+					<tr class="bbs-notice info  ">
+				<td class="text-center hidden-xs"><span class="label label-danger">공지</span></td>
+				<td class="">
+					<div class="bbs-flex-box">
+												<span class="bbs-title "><a href="http://www.mins01.com/mh/tech/read/674" >유용한 리눅스(LINUX) 명령어</a></span>
+						<span class="bbs-info-labels bbs-flex-sub bbs-flex-sub-right">
+																						
+																				</span>	
+					</div>
+											<div class="bt_tags text-right">
+							<span class="bt_cnt label label-default" title="tag: 2">tag:2</span>
+													<a class="bt_tag label  label-success" href="http://www.mins01.com/mh/tech/list?tq=tag&q=linux">#linux</a>
+														<a class="bt_tag label  label-success" href="http://www.mins01.com/mh/tech/list?tq=tag&q=command">#command</a>
+													</div>
+											
+
+				</td>
+				<td class="text-center text-overflow-ellipsis">공대여자</td>
+								<td class="text-center b_date"><span class="b_date_st">11-03-03</span><span class="b_date_ed">03-03</span></td>
+				<td class="text-center hidden-xs hidden-sm"><small>23523</small></td>
+			</tr>
+					<tr class="bbs-notice info  ">
+				<td class="text-center hidden-xs"><span class="label label-danger">공지</span></td>
+				<td class="">
+					<div class="bbs-flex-box">
+												<span class="bbs-title "><a href="http://www.mins01.com/mh/tech/read/136" >주요 링크 정리 LINK</a></span>
+						<span class="bbs-info-labels bbs-flex-sub bbs-flex-sub-right">
+																						
+																				</span>	
+					</div>
+											<div class="bt_tags text-right">
+							<span class="bt_cnt label label-default" title="tag: 1">tag:1</span>
+													<a class="bt_tag label  label-success" href="http://www.mins01.com/mh/tech/list?tq=tag&q=link">#link</a>
+													</div>
+											
+
+				</td>
+				<td class="text-center text-overflow-ellipsis">공대여자</td>
+								<td class="text-center b_date"><span class="b_date_st">05-11-28</span><span class="b_date_ed">11-28</span></td>
+				<td class="text-center hidden-xs hidden-sm"><small>25076</small></td>
+			</tr>
+							<tr class="bbs-dpeth bbs-dpeth-0  ">
+				<td class="text-center hidden-xs">1199</td>
+				<td class="">
+					<div class="bbs-flex-box">
+												<span class="bbs-title "><a href="http://www.mins01.com/mh/tech/read/1254" >검색엔진 최적화를 위한 방법 john doherty</a></span>
+						<span class="bbs-info-labels bbs-flex-sub bbs-flex-sub-right">
+																													<span class="bf_cnt label label-default" title="file: 1">1</span>
+								
+																				</span>	
+					</div>
+											<div class="bt_tags text-right">
+							<span class="bt_cnt label label-default" title="tag: 6">tag:6</span>
+													<a class="bt_tag label  label-success" href="http://www.mins01.com/mh/tech/list?tq=tag&q=%EA%B2%80%EC%83%89%EC%97%94%EC%A7%84">#검색엔진</a>
+														<a class="bt_tag label  label-success" href="http://www.mins01.com/mh/tech/list?tq=tag&q=%EB%B0%A9%EB%B2%95">#방법</a>
+														<a class="bt_tag label  label-success" href="http://www.mins01.com/mh/tech/list?tq=tag&q=seo">#seo</a>
+														<a class="bt_tag label  label-success" href="http://www.mins01.com/mh/tech/list?tq=tag&q=john">#john</a>
+														<a class="bt_tag label  label-success" href="http://www.mins01.com/mh/tech/list?tq=tag&q=doherty">#doherty</a>
+														<a class="bt_tag label  label-success" href="http://www.mins01.com/mh/tech/list?tq=tag&q=%EC%B5%9C%EC%A0%81%ED%99%94">#최적화</a>
+													</div>
+											
+
+				</td>
+				<td class="text-center text-overflow-ellipsis">공대여자</td>
+								<td class="text-center b_date"><span class="b_date_st">19-01-29</span><span class="b_date_ed">01-29</span></td>
+				<td class="text-center hidden-xs hidden-sm"><small>35</small></td>
+			</tr>
+					<tr class="bbs-dpeth bbs-dpeth-0  ">
+				<td class="text-center hidden-xs">1198</td>
+				<td class="">
+					<div class="bbs-flex-box">
+												<span class="bbs-title "><a href="http://www.mins01.com/mh/tech/read/1253" >HDD 고장률</a></span>
+						<span class="bbs-info-labels bbs-flex-sub bbs-flex-sub-right">
+																													<span class="bf_cnt label label-default" title="file: 2">2</span>
+								
+																				</span>	
+					</div>
+											<div class="bt_tags text-right">
+							<span class="bt_cnt label label-default" title="tag: 2">tag:2</span>
+													<a class="bt_tag label  label-success" href="http://www.mins01.com/mh/tech/list?tq=tag&q=hdd">#hdd</a>
+														<a class="bt_tag label  label-success" href="http://www.mins01.com/mh/tech/list?tq=tag&q=hardware">#hardware</a>
+													</div>
+											
+
+				</td>
+				<td class="text-center text-overflow-ellipsis">공대여자</td>
+								<td class="text-center b_date"><span class="b_date_st">19-01-29</span><span class="b_date_ed">01-29</span></td>
+				<td class="text-center hidden-xs hidden-sm"><small>32</small></td>
+			</tr>
+					<tr class="bbs-dpeth bbs-dpeth-0  ">
+				<td class="text-center hidden-xs">1197</td>
+				<td class="">
+					<div class="bbs-flex-box">
+												<span class="bbs-title "><a href="http://www.mins01.com/mh/tech/read/1252" >set /a cmd 에서 계산하기 </a></span>
+						<span class="bbs-info-labels bbs-flex-sub bbs-flex-sub-right">
+																						
+																				</span>	
+					</div>
+											<div class="bt_tags text-right">
+							<span class="bt_cnt label label-default" title="tag: 4">tag:4</span>
+													<a class="bt_tag label  label-success" href="http://www.mins01.com/mh/tech/list?tq=tag&q=windows">#windows</a>
+														<a class="bt_tag label  label-success" href="http://www.mins01.com/mh/tech/list?tq=tag&q=set">#set</a>
+														<a class="bt_tag label  label-success" href="http://www.mins01.com/mh/tech/list?tq=tag&q=cmd">#cmd</a>
+														<a class="bt_tag label  label-success" href="http://www.mins01.com/mh/tech/list?tq=tag&q=%EA%B3%84%EC%82%B0">#계산</a>
+													</div>
+											
+
+				</td>
+				<td class="text-center text-overflow-ellipsis">공대여자</td>
+								<td class="text-center b_date"><span class="b_date_st">19-01-29</span><span class="b_date_ed">01-29</span></td>
+				<td class="text-center hidden-xs hidden-sm"><small>28</small></td>
+			</tr>
+					<tr class="bbs-dpeth bbs-dpeth-0  ">
+				<td class="text-center hidden-xs">1196</td>
+				<td class="">
+					<div class="bbs-flex-box">
+												<span class="bbs-title "><a href="http://www.mins01.com/mh/tech/read/1251" >Test for SVG</a></span>
+						<span class="bbs-info-labels bbs-flex-sub bbs-flex-sub-right">
+																													<span class="bf_cnt label label-default" title="file: 2">2</span>
+								
+																				</span>	
+					</div>
+											<div class="bt_tags text-right">
+							<span class="bt_cnt label label-default" title="tag: 3">tag:3</span>
+													<a class="bt_tag label  label-success" href="http://www.mins01.com/mh/tech/list?tq=tag&q=html">#html</a>
+														<a class="bt_tag label  label-success" href="http://www.mins01.com/mh/tech/list?tq=tag&q=svg">#svg</a>
+														<a class="bt_tag label  label-success" href="http://www.mins01.com/mh/tech/list?tq=tag&q=canvas">#canvas</a>
+													</div>
+											
+
+				</td>
+				<td class="text-center text-overflow-ellipsis">공대여자</td>
+								<td class="text-center b_date"><span class="b_date_st">19-01-22</span><span class="b_date_ed">01-22</span></td>
+				<td class="text-center hidden-xs hidden-sm"><small>92</small></td>
+			</tr>
+					<tr class="bbs-dpeth bbs-dpeth-0  ">
+				<td class="text-center hidden-xs">1195</td>
+				<td class="">
+					<div class="bbs-flex-box">
+												<span class="bbs-title "><a href="http://www.mins01.com/mh/tech/read/1250" >W3C 표준화 제정 단계</a></span>
+						<span class="bbs-info-labels bbs-flex-sub bbs-flex-sub-right">
+																						
+																				</span>	
+					</div>
+											<div class="bt_tags text-right">
+							<span class="bt_cnt label label-default" title="tag: 3">tag:3</span>
+													<a class="bt_tag label  label-success" href="http://www.mins01.com/mh/tech/list?tq=tag&q=w3c">#w3c</a>
+														<a class="bt_tag label  label-success" href="http://www.mins01.com/mh/tech/list?tq=tag&q=%ED%91%9C%EC%A4%80%ED%99%94">#표준화</a>
+														<a class="bt_tag label  label-success" href="http://www.mins01.com/mh/tech/list?tq=tag&q=whatwg">#whatwg</a>
+													</div>
+											
+
+				</td>
+				<td class="text-center text-overflow-ellipsis">공대여자</td>
+								<td class="text-center b_date"><span class="b_date_st">19-01-21</span><span class="b_date_ed">01-21</span></td>
+				<td class="text-center hidden-xs hidden-sm"><small>77</small></td>
+			</tr>
+					<tr class="bbs-dpeth bbs-dpeth-0  ">
+				<td class="text-center hidden-xs">1194</td>
+				<td class="">
+					<div class="bbs-flex-box">
+												<span class="bbs-title "><a href="http://www.mins01.com/mh/tech/read/1249" >ui_style_ruler . css 로 자 표현</a></span>
+						<span class="bbs-info-labels bbs-flex-sub bbs-flex-sub-right">
+																													<span class="bf_cnt label label-default" title="file: 2">2</span>
+								
+																				</span>	
+					</div>
+											<div class="bt_tags text-right">
+							<span class="bt_cnt label label-default" title="tag: 3">tag:3</span>
+													<a class="bt_tag label  label-success" href="http://www.mins01.com/mh/tech/list?tq=tag&q=ui">#ui</a>
+														<a class="bt_tag label  label-success" href="http://www.mins01.com/mh/tech/list?tq=tag&q=css">#css</a>
+														<a class="bt_tag label  label-success" href="http://www.mins01.com/mh/tech/list?tq=tag&q=ruler">#ruler</a>
+													</div>
+											
+
+				</td>
+				<td class="text-center text-overflow-ellipsis">공대여자</td>
+								<td class="text-center b_date"><span class="b_date_st">19-01-18</span><span class="b_date_ed">01-18</span></td>
+				<td class="text-center hidden-xs hidden-sm"><small>96</small></td>
+			</tr>
+					<tr class="bbs-dpeth bbs-dpeth-0  ">
+				<td class="text-center hidden-xs">1193</td>
+				<td class="">
+					<div class="bbs-flex-box">
+												<span class="bbs-title "><a href="http://www.mins01.com/mh/tech/read/1248" >css writing-mode 세로쓰기</a></span>
+						<span class="bbs-info-labels bbs-flex-sub bbs-flex-sub-right">
+																													<span class="bf_cnt label label-default" title="file: 1">1</span>
+								
+																				</span>	
+					</div>
+											<div class="bt_tags text-right">
+							<span class="bt_cnt label label-default" title="tag: 7">tag:7</span>
+													<a class="bt_tag label  label-success" href="http://www.mins01.com/mh/tech/list?tq=tag&q=css">#css</a>
+														<a class="bt_tag label  label-success" href="http://www.mins01.com/mh/tech/list?tq=tag&q=writing-mode">#writing-mode</a>
+														<a class="bt_tag label  label-success" href="http://www.mins01.com/mh/tech/list?tq=tag&q=%EC%88%98%EC%A7%81">#수직</a>
+														<a class="bt_tag label  label-success" href="http://www.mins01.com/mh/tech/list?tq=tag&q=90deg">#90deg</a>
+														<a class="bt_tag label  label-success" href="http://www.mins01.com/mh/tech/list?tq=tag&q=90%EB%8F%84">#90도</a>
+														<a class="bt_tag label  label-success" href="http://www.mins01.com/mh/tech/list?tq=tag&q=%EC%84%B8%EB%A1%9C">#세로</a>
+														<a class="bt_tag label  label-success" href="http://www.mins01.com/mh/tech/list?tq=tag&q=%EC%84%B8%EB%A1%9C%EC%93%B0%EA%B8%B0">#세로쓰기</a>
+													</div>
+											
+
+				</td>
+				<td class="text-center text-overflow-ellipsis">공대여자</td>
+								<td class="text-center b_date"><span class="b_date_st">19-01-18</span><span class="b_date_ed">01-18</span></td>
+				<td class="text-center hidden-xs hidden-sm"><small>143</small></td>
+			</tr>
+					<tr class="bbs-dpeth bbs-dpeth-0  ">
+				<td class="text-center hidden-xs">1192</td>
+				<td class="">
+					<div class="bbs-flex-box">
+												<span class="bbs-title "><a href="http://www.mins01.com/mh/tech/read/1247" >홈택스  브라우저 인증서 지원</a></span>
+						<span class="bbs-info-labels bbs-flex-sub bbs-flex-sub-right">
+																						
+																				</span>	
+					</div>
+											<div class="bt_tags text-right">
+							<span class="bt_cnt label label-default" title="tag: 4">tag:4</span>
+													<a class="bt_tag label  label-success" href="http://www.mins01.com/mh/tech/list?tq=tag&q=%ED%99%88%ED%83%9D%EC%8A%A4">#홈택스</a>
+														<a class="bt_tag label  label-success" href="http://www.mins01.com/mh/tech/list?tq=tag&q=hometax">#hometax</a>
+														<a class="bt_tag label  label-success" href="http://www.mins01.com/mh/tech/list?tq=tag&q=%EB%B8%8C%EB%9D%BC%EC%9A%B0%EC%A0%80">#브라우저</a>
+														<a class="bt_tag label  label-success" href="http://www.mins01.com/mh/tech/list?tq=tag&q=%EC%9D%B8%EC%A6%9D%EC%84%9C">#인증서</a>
+													</div>
+											
+
+				</td>
+				<td class="text-center text-overflow-ellipsis">공대여자</td>
+								<td class="text-center b_date"><span class="b_date_st">19-01-14</span><span class="b_date_ed">01-14</span></td>
+				<td class="text-center hidden-xs hidden-sm"><small>125</small></td>
+			</tr>
+					<tr class="bbs-dpeth bbs-dpeth-0  ">
+				<td class="text-center hidden-xs">1191</td>
+				<td class="">
+					<div class="bbs-flex-box">
+												<span class="bbs-title "><a href="http://www.mins01.com/mh/tech/read/1246" >gitea 깃티</a></span>
+						<span class="bbs-info-labels bbs-flex-sub bbs-flex-sub-right">
+																													<span class="bf_cnt label label-default" title="file: 1">1</span>
+								
+																				</span>	
+					</div>
+											<div class="bt_tags text-right">
+							<span class="bt_cnt label label-default" title="tag: 5">tag:5</span>
+													<a class="bt_tag label  label-success" href="http://www.mins01.com/mh/tech/list?tq=tag&q=git">#git</a>
+														<a class="bt_tag label  label-success" href="http://www.mins01.com/mh/tech/list?tq=tag&q=gitea">#gitea</a>
+														<a class="bt_tag label  label-success" href="http://www.mins01.com/mh/tech/list?tq=tag&q=private">#private</a>
+														<a class="bt_tag label  label-success" href="http://www.mins01.com/mh/tech/list?tq=tag&q=painless">#painless</a>
+														<a class="bt_tag label  label-success" href="http://www.mins01.com/mh/tech/list?tq=tag&q=self-hosted">#self-hosted</a>
+													</div>
+											
+
+				</td>
+				<td class="text-center text-overflow-ellipsis">공대여자</td>
+								<td class="text-center b_date"><span class="b_date_st">19-01-11</span><span class="b_date_ed">01-11</span></td>
+				<td class="text-center hidden-xs hidden-sm"><small>123</small></td>
+			</tr>
+					<tr class="bbs-dpeth bbs-dpeth-0 warning ">
+				<td class="text-center hidden-xs">1190</td>
+				<td class="">
+					<div class="bbs-flex-box">
+												<span class="bbs-title "><a href="http://www.mins01.com/mh/tech/read/1245" >라라벨, laravel 로 샘플 만들어 보자. (4)(end) view , controller</a></span>
+						<span class="bbs-info-labels bbs-flex-sub bbs-flex-sub-right">
+																						
+															<span class="bc_cnt label label-default" title="comment: 2">2</span>
+																				</span>	
+					</div>
+											<div class="bt_tags text-right">
+							<span class="bt_cnt label label-default" title="tag: 4">tag:4</span>
+													<a class="bt_tag label  label-success" href="http://www.mins01.com/mh/tech/list?tq=tag&q=%EB%9D%BC%EB%9D%BC%EB%B2%A8">#라라벨</a>
+														<a class="bt_tag label  label-success" href="http://www.mins01.com/mh/tech/list?tq=tag&q=laravel">#laravel</a>
+														<a class="bt_tag label  label-success" href="http://www.mins01.com/mh/tech/list?tq=tag&q=%EC%83%98%ED%94%8C">#샘플</a>
+														<a class="bt_tag label  label-success" href="http://www.mins01.com/mh/tech/list?tq=tag&q=sample">#sample</a>
+													</div>
+											
+
+				</td>
+				<td class="text-center text-overflow-ellipsis">공대여자</td>
+								<td class="text-center b_date"><span class="b_date_st">19-01-11</span><span class="b_date_ed">01-11</span></td>
+				<td class="text-center hidden-xs hidden-sm"><small>141</small></td>
+			</tr>
+					<tr class="bbs-dpeth bbs-dpeth-0  ">
+				<td class="text-center hidden-xs">1189</td>
+				<td class="">
+					<div class="bbs-flex-box">
+												<span class="bbs-title "><a href="http://www.mins01.com/mh/tech/read/1244" >text-border css</a></span>
+						<span class="bbs-info-labels bbs-flex-sub bbs-flex-sub-right">
+																						
+																				</span>	
+					</div>
+											<div class="bt_tags text-right">
+							<span class="bt_cnt label label-default" title="tag: 2">tag:2</span>
+													<a class="bt_tag label  label-success" href="http://www.mins01.com/mh/tech/list?tq=tag&q=css">#css</a>
+														<a class="bt_tag label  label-success" href="http://www.mins01.com/mh/tech/list?tq=tag&q=text-border">#text-border</a>
+													</div>
+											
+
+				</td>
+				<td class="text-center text-overflow-ellipsis">공대여자</td>
+								<td class="text-center b_date"><span class="b_date_st">19-01-10</span><span class="b_date_ed">01-10</span></td>
+				<td class="text-center hidden-xs hidden-sm"><small>138</small></td>
+			</tr>
+					<tr class="bbs-dpeth bbs-dpeth-0  ">
+				<td class="text-center hidden-xs">1188</td>
+				<td class="">
+					<div class="bbs-flex-box">
+												<span class="bbs-title "><a href="http://www.mins01.com/mh/tech/read/1243" >laravel blade templete with client vue.js</a></span>
+						<span class="bbs-info-labels bbs-flex-sub bbs-flex-sub-right">
+																						
+																				</span>	
+					</div>
+											<div class="bt_tags text-right">
+							<span class="bt_cnt label label-default" title="tag: 5">tag:5</span>
+													<a class="bt_tag label  label-success" href="http://www.mins01.com/mh/tech/list?tq=tag&q=laravel">#laravel</a>
+														<a class="bt_tag label  label-success" href="http://www.mins01.com/mh/tech/list?tq=tag&q=blade">#blade</a>
+														<a class="bt_tag label  label-success" href="http://www.mins01.com/mh/tech/list?tq=tag&q=templete">#templete</a>
+														<a class="bt_tag label  label-success" href="http://www.mins01.com/mh/tech/list?tq=tag&q=vue">#vue</a>
+														<a class="bt_tag label  label-success" href="http://www.mins01.com/mh/tech/list?tq=tag&q=js">#js</a>
+													</div>
+											
+
+				</td>
+				<td class="text-center text-overflow-ellipsis">공대여자</td>
+								<td class="text-center b_date"><span class="b_date_st">19-01-09</span><span class="b_date_ed">01-09</span></td>
+				<td class="text-center hidden-xs hidden-sm"><small>124</small></td>
+			</tr>
+					<tr class="bbs-dpeth bbs-dpeth-0  ">
+				<td class="text-center hidden-xs">1187</td>
+				<td class="">
+					<div class="bbs-flex-box">
+												<span class="bbs-title "><a href="http://www.mins01.com/mh/tech/read/1242" >라라벨, laravel 로 샘플 만들어 보자. (3) - model, seeder</a></span>
+						<span class="bbs-info-labels bbs-flex-sub bbs-flex-sub-right">
+																						
+																				</span>	
+					</div>
+											<div class="bt_tags text-right">
+							<span class="bt_cnt label label-default" title="tag: 4">tag:4</span>
+													<a class="bt_tag label  label-success" href="http://www.mins01.com/mh/tech/list?tq=tag&q=%EB%9D%BC%EB%9D%BC%EB%B2%A8">#라라벨</a>
+														<a class="bt_tag label  label-success" href="http://www.mins01.com/mh/tech/list?tq=tag&q=laravel">#laravel</a>
+														<a class="bt_tag label  label-success" href="http://www.mins01.com/mh/tech/list?tq=tag&q=sample">#sample</a>
+														<a class="bt_tag label  label-success" href="http://www.mins01.com/mh/tech/list?tq=tag&q=%EC%83%98%ED%94%8C">#샘플</a>
+													</div>
+											
+
+				</td>
+				<td class="text-center text-overflow-ellipsis">공대여자</td>
+								<td class="text-center b_date"><span class="b_date_st">19-01-09</span><span class="b_date_ed">01-09</span></td>
+				<td class="text-center hidden-xs hidden-sm"><small>154</small></td>
+			</tr>
+					<tr class="bbs-dpeth bbs-dpeth-0  ">
+				<td class="text-center hidden-xs">1186</td>
+				<td class="">
+					<div class="bbs-flex-box">
+												<span class="bbs-title "><a href="http://www.mins01.com/mh/tech/read/1241" >라라벨, laravel 로 샘플 만들어 보자. (2) - view</a></span>
+						<span class="bbs-info-labels bbs-flex-sub bbs-flex-sub-right">
+																						
+																				</span>	
+					</div>
+											<div class="bt_tags text-right">
+							<span class="bt_cnt label label-default" title="tag: 4">tag:4</span>
+													<a class="bt_tag label  label-success" href="http://www.mins01.com/mh/tech/list?tq=tag&q=%EB%9D%BC%EB%9D%BC%EB%B2%A8">#라라벨</a>
+														<a class="bt_tag label  label-success" href="http://www.mins01.com/mh/tech/list?tq=tag&q=laravel">#laravel</a>
+														<a class="bt_tag label  label-success" href="http://www.mins01.com/mh/tech/list?tq=tag&q=sample">#sample</a>
+														<a class="bt_tag label  label-success" href="http://www.mins01.com/mh/tech/list?tq=tag&q=%EC%83%98%ED%94%8C">#샘플</a>
+													</div>
+											
+
+				</td>
+				<td class="text-center text-overflow-ellipsis">공대여자</td>
+								<td class="text-center b_date"><span class="b_date_st">19-01-09</span><span class="b_date_ed">01-09</span></td>
+				<td class="text-center hidden-xs hidden-sm"><small>163</small></td>
+			</tr>
+					<tr class="bbs-dpeth bbs-dpeth-0  ">
+				<td class="text-center hidden-xs">1185</td>
+				<td class="">
+					<div class="bbs-flex-box">
+												<span class="bbs-title "><a href="http://www.mins01.com/mh/tech/read/1240" >라라벨, laravel 로 샘플 만들어 보자. (1) - Migration,Controller,Route</a></span>
+						<span class="bbs-info-labels bbs-flex-sub bbs-flex-sub-right">
+																						
+															<span class="bc_cnt label label-default" title="comment: 1">1</span>
+																				</span>	
+					</div>
+											<div class="bt_tags text-right">
+							<span class="bt_cnt label label-default" title="tag: 3">tag:3</span>
+													<a class="bt_tag label  label-success" href="http://www.mins01.com/mh/tech/list?tq=tag&q=%EB%9D%BC%EB%9D%BC%EB%B2%A8">#라라벨</a>
+														<a class="bt_tag label  label-success" href="http://www.mins01.com/mh/tech/list?tq=tag&q=laravel">#laravel</a>
+														<a class="bt_tag label  label-success" href="http://www.mins01.com/mh/tech/list?tq=tag&q=sample">#sample</a>
+													</div>
+											
+
+				</td>
+				<td class="text-center text-overflow-ellipsis">공대여자</td>
+								<td class="text-center b_date"><span class="b_date_st">19-01-09</span><span class="b_date_ed">01-09</span></td>
+				<td class="text-center hidden-xs hidden-sm"><small>206</small></td>
+			</tr>
+				</table>
+	</div>
+		<div class="panel-footer">
+		<nav class="text-center">
+			
+
+	<ul class="pagination pagination-sm">
+
+				<li class="disabled">
+			<span title="First" href="" aria-label="First">
+				<span aria-hidden="true">&#8666;</span>
+			</span>
+		</li>
+				<li class="disabled">
+			<span title="Previous" href="" aria-label="Previous">
+				<span aria-hidden="true">&laquo;</span>
+			</span>
+		</li>
+						<li class="active"><a title="1 page"  href="http://www.mins01.com/mh/tech/list?page=1" aria-label="1 page">1<span class="sr-only">(current)</span></a></li>
+						<li ><a title="2 page"  href="http://www.mins01.com/mh/tech/list?page=2" aria-label="2 page">2</a></li>
+						<li ><a title="3 page"  href="http://www.mins01.com/mh/tech/list?page=3" aria-label="3 page">3</a></li>
+						<li ><a title="4 page"  href="http://www.mins01.com/mh/tech/list?page=4" aria-label="4 page">4</a></li>
+						<li ><a title="5 page"  href="http://www.mins01.com/mh/tech/list?page=5" aria-label="5 page">5</a></li>
+				
+				<li >
+			<a title="Next" href="http://www.mins01.com/mh/tech/list?page=6" aria-label="Next">
+				<span >&raquo;</span>
+			</a>
+		</li>
+		
+				<li >
+			<a title="Last" href="http://www.mins01.com/mh/tech/list?page=80" aria-label="Last">
+				<span >&#8667;</span>
+			</a>
+		</li>
+	
+	</ul>
+
+
+
+
+		</nav>
+	</div>
+	<div class="panel-footer">
+		<div class="row">
+			<div class="col-lg-2 col-sm-2 hidden-xs">
+			</div>
+			<div class="col-lg-8 col-sm-8 ">
+				<form action="http://www.mins01.com/mh/tech/list" class="form-inline text-center form-search">
+			<datalist class="tag_lists" id="tag_lists">
+		<option value="tag_elements"></option>
+	</datalist>
+	<script>
+	$(function(){
+		if(!$('datalist.tag_lists').get(0).load){
+			$('datalist.tag_lists').get(0).load = true;
+			var tag_lists_url = "http:\/\/www.mins01.com\/mh\/tech\/tag_lists";
+			load_tag_lists(tag_lists_url)	
+		}
+		
+	})
+	</script>
+	<div class="input-group">
+		<span class="input-group-addon">
+			tag
+		</span>
+		<input name="tag" list="tag_lists" aria-label="tag" type="search" class="form-control " placeholder="tag" value="">
+	</div><!-- /input-group -->
+		<div class="form-group">
+
+		<div class="input-group">
+			<div class="input-group-btn">
+			
+								<select name="tq" class="form-control btn btn-default" style="max-width:8em" aria-label="검색대상" >
+				<option value="title" >제목</option>
+				<option value="text" >내용</option>
+				<option value="tt" >제목+내용</option>
+				<option value="ttc" >제목+내용+코멘트</option>				<option value="name" >작성자</option>
+				<option value="tag" >태그</option>				</select>
+				
+			</div>
+		</div>
+		<div class="input-group">
+			<input name="q" aria-label="검색어" type="search" class="form-control " placeholder="검색어" value="">
+			<span class="input-group-btn">
+				<button type="submit" class="btn btn-info">검색</button>
+			</span>
+		</div><!-- /input-group -->
+	</div>
+</form>			</div>
+			<div class="col-lg-2 col-sm-2 text-right">
+								<a href="http://www.mins01.com/mh/tech/write" class="btn btn-success glyphicon glyphicon-pencil"> 작성</a>
+							</div>
+		</div>
+	</div>
+</div>
+	</div><!-- /.container-fluid -->
+	<footer>
+		<div class="container-fluid" style="background-color:#fff;color:#999">
+			<div class="text-right"> 
+			<small>
+			[0.0564 sec]/[5.79MB Byte]
+						<a href="/mh/_admin/" target="_blank" class="label label-warning">관리자</a>
+						</small>
+			</div>
+			
+		</div>
+	</footer>
+<div style="width:300px;margin:2px auto" class="google_ad"><script type="text/javascript">			
+	<!--
+	google_ad_client = "ca-pub-5804424351292113";
+	/* 300x250_하단위치 */
+	google_ad_slot = "1810563809";
+	google_ad_width = 300;
+	google_ad_height = 250;
+	//-->
+</script>
+<script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script></div>
+<script type="text/javascript">
+// <![CDATA[ 구글 어날리틱스
+if(document.location.hostname =='mins01.com' ||document.location.hostname =='www.mins01.com'){
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-28167507-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+	var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+	//ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+	ga.src = ('https:' == document.location.protocol ?'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js'; //디스플레이 리마케팅과 광고 보고 기능을 사용하도록 수정
+	var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+	})();
+}
+//]]>
+</script></body>
+</html>
