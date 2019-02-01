@@ -32,7 +32,9 @@ foreach($nodes as $n){
 $nodes = select_elements('h1,h2,h3,h4,h5,title,span,div,li,a', $html);
 foreach($nodes as $n){	
 	if(count($n['children'])>0){continue;}
-	$res[]=array('tag'=>$n['name'],'text'=>trim($n['text']));
+	$text = $n['text'];
+	if(strlen($text)==0){continue;}
+	$res[]=array('tag'=>$n['name'],'text'=>$text);
 }
 
 
@@ -57,7 +59,7 @@ $conf_scores = array(
 foreach($res as & $r){
 	$r['score'] = isset($conf_scores[$r['tag']])?$conf_scores[$r['tag']]:1;
 }
-print_r($res);
+// print_r($res);
 // 문장 나누기
 $words = array();
 foreach($res as & $r){
