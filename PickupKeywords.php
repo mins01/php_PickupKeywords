@@ -1,6 +1,6 @@
 <?
 /**
- * [PickupKeywords description]
+ * HTML의 키워드 추출 프로그램
  */
 class PickupKeywords{
 	private $html = '';
@@ -24,16 +24,29 @@ class PickupKeywords{
 	);
 	public $min_length = 2;
 	public $max_length = 100;
-	function setHTML($html){
-		$this->html = $html;
+	public function setUrl($url)
+	{
+		$html = @file_get_contents($url);
+		$this->setHTML($html);
 	}
-	function split_tags_string($string){
+	public function setHTML($html){
+		$doc = new DOMDocument('1.0','UTF-8');
+		libxml_use_internal_errors(true); //에러 감추기
+		$doc->loadHTML('<?xml encoding="UTF-8">' .$html);
+		// dirty fix
+		foreach ($doc->childNodes as $item)
+		    if ($item->nodeType == XML_PI_NODE)
+		        $doc->removeChild($item); // remove hack
+		$doc->encoding = 'UTF-8'; // insert proper
+		$this->html = $doc;
+	}
+	public function split_tags_string($string){
 		$matched = array();
 		// preg_match_all('/([^#\t\s\n\x00-\x2C\x2E-\x2F\x3A-\x40\x5B-\x5E\x60\x7B-\x7F]{1,30})/u',strtolower($string),$matched);
 		preg_match_all('/([^#\t\s\n\x00-\x2C\x2E-\x2F\x3A-\x40\x5B-\x5E\x60\x7B-\x7F]{'.$this->min_length.','.$this->max_length.'})/u',strtolower($string),$matched);
 		return isset($matched[1])?array_unique($matched[1]):array();
 	}
-	function getMetas(){
+	public function getMetas(){
 		$res = array();
 		$nodes = select_elements($this->search_metas, $this->html);
 		foreach($nodes as $n){	
@@ -42,20 +55,22 @@ class PickupKeywords{
 			$attributes_property = isset($n['attributes']['property'])?$n['attributes']['property']:'';
 			$attributes_content = isset($n['attributes']['content'])?trim($n['attributes']['content']):'';
 			
-			$tag = isset($attributes_name[0])?$attributes_name:$attributes_property;
+			$tag = 'meta-'.(isset($attributes_name[0])?$attributes_name:$attributes_property);
 			if(!isset($tag[0])){continue;}
 			if(!isset($attributes_content[0])){continue;}
 			$score = isset($this->conf_scores[$tag])?$this->conf_scores[$tag]:1;
-			$res[]=array('tag'=>'meta-'.$tag,'text'=>$attributes_content,'score'=>$score);
+			$res[]=array('tag'=>$tag,'text'=>$attributes_content,'score'=>$score);
 		}
 		return $res;
 	}
-	function getTags(){
+	public function getTags(){
 		$res = array();
 		$nodes = select_elements($this->search_tags, $this->html);
+		$htags = array('h1','h2','h3','h4','h5');// 의미가 있는것으로 본다.
 		foreach($nodes as $n){	
-			if(count($n['children'])>0){continue;}
+			
 			$tag = $n['name'];
+			if(!in_array($tag,$htags) && count($n['children'])>0){continue;}
 			$text = trim($n['text']);
 			if(strlen($text)==0){continue;}
 			$score = isset($this->conf_scores[$tag])?$this->conf_scores[$tag]:1;
@@ -63,10 +78,10 @@ class PickupKeywords{
 		}
 		return $res;
 	}
-	function getTexts(){
+	public function getTexts(){
 		return array_merge($this->getMetas(),$this->getTags());
 	}
-	function getWords($texts){
+	public function getWords($texts){
 		$words = array();
 		foreach($texts as & $r){
 			$score = $r['score'];
