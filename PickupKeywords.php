@@ -25,9 +25,30 @@ class PickupKeywords{
 	public $min_length = 2; //최소 길이
 	public $max_length = 100; //최대 길이
 	public $numeric_multiple = 1;//숫자에 대한 배수(0이면 숫자는 우선순위가 0이 됨)
+	public function getHTML($url){
+		if(function_exists('curl_init')){
+			$conn = curl_init($url);
+			curl_setopt($conn, CURLOPT_FAILONERROR, 1);
+			//curl_setopt( $conn, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_0);
+			//curl_setopt( $conn, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
+			curl_setopt($conn, CURLOPT_HEADER, true); //응답헤더 OFF. ON 할경우 받는 파일에 헤더가 붙음.
+			curl_setopt($conn, CURLOPT_RETURNTRANSFER , true); //응답 내용 가져올지 여부. TRUE면 내용을 리턴. FALSE면 직접 브라우저에 출력
+			//curl_setopt($conn, CURLOPT_USERAGENT,"Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/37.0.2062.102 Safari/537.36"); //User Agent 설정
+			curl_setopt($conn, CURLOPT_CONNECTTIMEOUT,10); //서버 접속시 timeout 설정
+			curl_setopt($conn, CURLOPT_TIMEOUT, 10); //서버 접속시 timeout 설정
+			//curl_setopt($conn, CURLOPT_TIMEOUT, $timeout); // curl exec 실행시간 timeout 설정
+			$data = curl_exec($conn);
+			//echo ($data);		exit;
+			$split_result = explode("\r\n\r\n", $data, 2);
+			return  isset($split_result[1])?$split_result[1]:'';
+		}else{
+			return file_get_contents($url);
+		}
+			
+	}
 	public function setUrl($url)
 	{
-		$html = @file_get_contents($url);
+		$html = $this->getHTML($url);
 		$charset = $this->getCharset($html);
 		if($charset != 'utf-8'){
 			$html = str_ireplace($charset, 'utf-8', $html);
