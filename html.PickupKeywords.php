@@ -3,8 +3,8 @@ require('PickupKeywords.php');
 require('GetAppInfoByPackagename.php');
 require('php_selector/selector.inc');
 
-$url = isset($_GET['url'])?$_GET['url']:'';
-$pkname = isset($_GET['pkname'])?$_GET['pkname']:'';
+$url = isset($_GET['url'])?$_GET['url']:'http://domeggook.com/main/';
+$pkname = isset($_GET['pkname'])?$_GET['pkname']:'com.mins01.othello001';
 $texts = array();
 $words = array();
 
@@ -76,7 +76,7 @@ if(isset($url[0])){
 							<div class="input-group-prepend">
 								<span class="input-group-text" id="basic-addon1">url</span>
 							</div>
-							<input type="url" name="url" class="form-control" placeholder="http(s?)://.*" value="http://domeggook.com/main/">
+							<input type="url" name="url" class="form-control" placeholder="http(s?)://.*" value="<?=htmlspecialchars($url)?>">
 							<div class="input-group-append">
 								<button class="btn btn-info">get info</button>
 							</div>
@@ -89,7 +89,7 @@ if(isset($url[0])){
 							<div class="input-group-prepend">
 								<span class="input-group-text" id="basic-addon1">Package name</span>
 							</div>
-							<input type="text" name="pkname" class="form-control" placeholder="com.aaa.app" value="com.mins01.othello001">
+							<input type="text" name="pkname" class="form-control" placeholder="com.aaa.app" value="<?=htmlspecialchars($pkname)?>">
 							<div class="input-group-append">
 								<button class="btn btn-info">get info</button>
 							</div>

@@ -29,6 +29,8 @@ class PickupKeywords{
 		if(function_exists('curl_init')){
 			$conn = curl_init($url);
 			curl_setopt($conn, CURLOPT_FAILONERROR, 1);
+			curl_setopt($conn, CURLOPT_SSL_VERIFYPEER, FALSE); //SSL 인증 무시
+			curl_setopt($conn, CURLOPT_SSL_VERIFYHOST, FALSE); //SSL 인증 무시
 			//curl_setopt( $conn, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_0);
 			//curl_setopt( $conn, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
 			curl_setopt($conn, CURLOPT_HEADER, true); //응답헤더 OFF. ON 할경우 받는 파일에 헤더가 붙음.
@@ -38,7 +40,11 @@ class PickupKeywords{
 			curl_setopt($conn, CURLOPT_TIMEOUT, 10); //서버 접속시 timeout 설정
 			//curl_setopt($conn, CURLOPT_TIMEOUT, $timeout); // curl exec 실행시간 timeout 설정
 			$data = curl_exec($conn);
-			//echo ($data);		exit;
+			$errno = curl_errno($conn);
+			if($errno != 0){
+				$curl_error = curl_error($conn);
+				exit(__METHOD__.' : '.$curl_error);
+			}
 			$split_result = explode("\r\n\r\n", $data, 2);
 			return  isset($split_result[1])?$split_result[1]:'';
 		}else{
@@ -52,7 +58,7 @@ class PickupKeywords{
 		$charset = $this->getCharset($html);
 		if($charset != 'utf-8'){
 			$html = str_ireplace($charset, 'utf-8', $html);
-			$html = iconv('euc-kr', 'utf-8//IGNORE', $html);	
+			$html = iconv($charset, 'utf-8//IGNORE', $html);	
 		}
 		
 		$this->setHTML($html);
@@ -60,7 +66,7 @@ class PickupKeywords{
 	public function setHTML($html){
 		$doc = new DOMDocument('1.0','UTF-8');
 		libxml_use_internal_errors(true); //에러 감추기
-		$doc->loadHTML($html);
+		// $doc->loadHTML($html);
 		$doc->loadHTML('<?xml encoding="UTF-8">' .$html);
 		// dirty fix
 		foreach ($doc->childNodes as $item)
