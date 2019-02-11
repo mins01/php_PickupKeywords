@@ -5,25 +5,26 @@ require('php_selector/selector.inc');
 
 $url = isset($_GET['url'])?$_GET['url']:'http://domeggook.com/main/';
 $pkname = isset($_GET['pkname'])?$_GET['pkname']:'com.mins01.othello001';
+$mode = isset($_GET['mode'])?$_GET['mode']:'';
 $texts = array();
 $words = array();
-
-if(isset($url[0])){
+$sh = '';
+if($mode =='url' && isset($url[0])){
 	// $url = 'https://play.google.com/store/apps/details?id=com.mins01.othello001';
 	$pkk = new PickupKeywords();
 	$pkk->numeric_multiple = 0.1; //숫자의 가중치 낮춤
 	$pkk->setUrl($url);
-	$texts = $pkk->getMetas();
 	$texts = $pkk->getTexts();
 	$words = $pkk->getWords($texts);
-
-}else if(isset($pkname[0])){
+	$sh = $url;
+}else if($mode =='pkname' && isset($pkname[0])){
 	// $pkname = 'com.mins01.othello001';
 	$gabp = new GetAppInfoByPackagename();
 	$gabp->numeric_multiple = 0.1; //숫자의 가중치 낮춤
 	$gabp->setPackagename($pkname);
 	$texts = $gabp->getTexts();
 	$words = $gabp->getWords($texts);
+	$sh = $pkname;
 }
 
 ?>
@@ -72,6 +73,7 @@ if(isset($url[0])){
 				<li class="list-group-item active">조건</li>
 				<li class="list-group-item">
 					<form action="" method="get" >
+						<input type="hidden" name="mode" value="url" />
 						<div class="input-group mb-3">
 							<div class="input-group-prepend">
 								<span class="input-group-text" id="basic-addon1">url</span>
@@ -85,6 +87,7 @@ if(isset($url[0])){
 				</li>
 				<li class="list-group-item">
 					<form action="" method="get" >
+						<input type="hidden" name="mode" value="pkname" />
 						<div class="input-group mb-3">
 							<div class="input-group-prepend">
 								<span class="input-group-text" id="basic-addon1">Package name</span>
@@ -99,7 +102,7 @@ if(isset($url[0])){
 			</ul>
 			<hr />
 			<ul class="list-group">
-				<li class="list-group-item active">결과</li>
+				<li class="list-group-item active">결과 : <?=htmlspecialchars($sh)?></li>
 				<li class="list-group-item">
 					<h3>words (단어 추출+가중치 부과,TOP10)</h3>
 					<table class="table">
