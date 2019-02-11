@@ -15,7 +15,7 @@ class PickupKeywords{
 		'h6'=>10,
 		'title'=>100,
 		'span'=>10,
-		'a'=>20,
+		'a'=>3,
 		'li'=>10,
 		'meta-description'=>90,
 		'meta-keywords'=>90,
@@ -27,6 +27,9 @@ class PickupKeywords{
 	public function setUrl($url)
 	{
 		$html = @file_get_contents($url);
+		$charset = $this->getCharset($html);
+		if($charset != 'utf-8');
+		$html = iconv($charset, 'utf-8//IGNORE', $html);
 		$this->setHTML($html);
 	}
 	public function setHTML($html){
@@ -39,6 +42,12 @@ class PickupKeywords{
 		        $doc->removeChild($item); // remove hack
 		$doc->encoding = 'UTF-8'; // insert proper
 		$this->html = $doc;
+	}
+	private function getCharset($html){
+		$matched = array();
+		preg_match('/(?:(?:charset=["\']?)([^\'"]+)(?:["\']?))/i',$html,$matched);
+		$charset = isset($matched[1])?$matched[1]:'utf-8';
+		return strtolower($charset);
 	}
 	public function split_tags_string($string){
 		$matched = array();
