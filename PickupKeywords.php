@@ -14,28 +14,33 @@ class PickupKeywords{
 		'h5'=>10,
 		'h6'=>10,
 		'title'=>100,
-		'span'=>10,
-		'a'=>3,
-		'li'=>10,
-		'meta-description'=>90,
-		'meta-keywords'=>90,
+		'span'=>5,
+		'a'=>1,
+		'li'=>5,
+		'meta-description'=>50,
+		'meta-keywords'=>50,
 		'meta-og:title'=>100,
-		'meta-og:description'=>90,
+		'meta-og:description'=>25,
 	);
-	public $min_length = 2;
-	public $max_length = 100;
+	public $min_length = 2; //최소 길이
+	public $max_length = 100; //최대 길이
+	public $numeric_multiple = 1;//숫자에 대한 배수(0이면 숫자는 우선순위가 0이 됨)
 	public function setUrl($url)
 	{
 		$html = @file_get_contents($url);
 		$charset = $this->getCharset($html);
-		if($charset != 'utf-8');
-		$html = iconv($charset, 'utf-8//IGNORE', $html);
+		if($charset != 'utf-8'){
+			$html = str_ireplace($charset, 'utf-8', $html);
+			$html = iconv('euc-kr', 'utf-8//IGNORE', $html);	
+		}
+		
 		$this->setHTML($html);
 	}
 	public function setHTML($html){
 		$doc = new DOMDocument('1.0','UTF-8');
 		libxml_use_internal_errors(true); //에러 감추기
-		$doc->loadHTML('<?xml encoding="UTF-8">' .$html);
+		$doc->loadHTML($html);
+		// $doc->loadHTML('<?xml encoding="UTF-8">' .$html);
 		// dirty fix
 		foreach ($doc->childNodes as $item)
 		    if ($item->nodeType == XML_PI_NODE)
@@ -45,7 +50,7 @@ class PickupKeywords{
 	}
 	private function getCharset($html){
 		$matched = array();
-		preg_match('/(?:(?:charset=["\']?)([^\'"]+)(?:["\']?))/i',$html,$matched);
+		preg_match('/(?:(?:charset=["\']?)([^"\',\s\t\n]+)(?:["\',\s\t\n]?))/i',$html,$matched);
 		$charset = isset($matched[1])?$matched[1]:'utf-8';
 		return strtolower($charset);
 	}
@@ -57,6 +62,7 @@ class PickupKeywords{
 	}
 	public function getMetas(){
 		$res = array();
+		// print_r($this->html->saveHTML());
 		$nodes = select_elements($this->search_metas, $this->html);
 		foreach($nodes as $n){	
 			// print_r($n);
@@ -101,7 +107,12 @@ class PickupKeywords{
 					$words[$k] = array(0,0,$k);
 				}
 				$words[$k][0]++;
-				$words[$k][1]+=$score;
+				if(preg_match('/^\d+$/',$k)){ //숫자로만 이루어져있을 경우
+					$words[$k][1]+=($score*$this->numeric_multiple);	
+				}else{
+					$words[$k][1]+=$score;
+				}
+				
 			}
 		}
 		usort($words,"PickupKeywords_my_sort");
