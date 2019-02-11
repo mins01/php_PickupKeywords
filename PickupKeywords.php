@@ -61,7 +61,7 @@ class PickupKeywords{
 		$doc = new DOMDocument('1.0','UTF-8');
 		libxml_use_internal_errors(true); //에러 감추기
 		$doc->loadHTML($html);
-		// $doc->loadHTML('<?xml encoding="UTF-8">' .$html);
+		$doc->loadHTML('<?xml encoding="UTF-8">' .$html);
 		// dirty fix
 		foreach ($doc->childNodes as $item)
 		    if ($item->nodeType == XML_PI_NODE)
