@@ -6,6 +6,7 @@ class PickupKeywords{
 	private $html = '';
 	public $search_tags = 'h1,h2,h3,h4,h5,title,span,div,li,a';
 	public $search_metas = 'meta[name="description"],meta[name="keywords"],meta[property="og:title"],meta[property="og:description"]';
+	public $user_agent = 'Mozilla/5.0 (Linux; Android 5.0; SM-G900P Build/LRX21T) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.109 Mobile Safari/537.36';
 	public $conf_scores = array(
 		'h1'=>50,
 		'h2'=>40,
@@ -36,9 +37,15 @@ class PickupKeywords{
 			curl_setopt($conn, CURLOPT_HEADER, true); //응답헤더 OFF. ON 할경우 받는 파일에 헤더가 붙음.
 			curl_setopt($conn, CURLOPT_RETURNTRANSFER , true); //응답 내용 가져올지 여부. TRUE면 내용을 리턴. FALSE면 직접 브라우저에 출력
 			//curl_setopt($conn, CURLOPT_USERAGENT,"Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/37.0.2062.102 Safari/537.36"); //User Agent 설정
-			curl_setopt($conn, CURLOPT_CONNECTTIMEOUT,10); //서버 접속시 timeout 설정
-			curl_setopt($conn, CURLOPT_TIMEOUT, 10); //서버 접속시 timeout 설정
+			curl_setopt($conn, CURLOPT_CONNECTTIMEOUT,20); //서버 접속시 timeout 설정
+			curl_setopt($conn, CURLOPT_TIMEOUT, 20); //서버 접속시 timeout 설정
 			//curl_setopt($conn, CURLOPT_TIMEOUT, $timeout); // curl exec 실행시간 timeout 설정
+			
+			$headers = array(
+				'User-Agent: '.$this->user_agent,
+			);
+			curl_setopt($conn, CURLOPT_HTTPHEADER, $headers);
+
 			$data = curl_exec($conn);
 			$errno = curl_errno($conn);
 			if($errno != 0){
