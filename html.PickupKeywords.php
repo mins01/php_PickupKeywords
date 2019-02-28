@@ -14,6 +14,12 @@ if($mode =='url' && isset($url[0])){
 	$pkk = new PickupKeywords();
 	$pkk->numeric_multiple = 0.1; //숫자의 가중치 낮춤
 	$pkk->setUrl($url);
+	// echo $pkk->getHTML($url);exit('d');
+	// $tags = $pkk->getTags();
+	// foreach($tags as $tag){
+	// 	echo implode(',',$tag),"\n";
+	// }
+	// exit;
 	$texts = $pkk->getTexts();
 	$words = $pkk->getWords($texts);
 	$sh = $url;
