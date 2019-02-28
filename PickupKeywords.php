@@ -4,7 +4,7 @@
  */
 class PickupKeywords{
 	private $html = '';
-	public $search_tags = 'h1,h2,h3,h4,h5,title,span,div,li,a';
+	public $search_tags = 'h1,h2,h3,h4,h5,title,span,div,li,a,input[type="text"][value]';
 	public $search_metas = 'meta[name="description"],meta[name="keywords"],meta[property="og:title"],meta[property="og:description"]';
 	// public $user_agent = 'Mozilla/5.0 (Linux; Android 5.0; SM-G900P Build/LRX21T) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.109 Mobile Safari/537.36'; //android
 	public $user_agent = 'Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.109 Safari/537.36'; //PC-windows
@@ -20,9 +20,10 @@ class PickupKeywords{
 		'span'=>5,
 		'a'=>1,
 		'li'=>5,
-		'meta-description'=>50,
-		'meta-keywords'=>50,
-		'meta-og:title'=>50,
+		'input'=>50,
+		'meta-description'=>25,
+		'meta-keywords'=>25,
+		'meta-og:title'=>25,
 		'meta-og:description'=>25,
 	);
 	public $min_length = 2; //최소 길이
@@ -124,11 +125,17 @@ class PickupKeywords{
 		foreach($nodes as $n){	
 			
 			$tag = $n['name'];
-			if(!in_array($tag,$htags) && count($n['children'])>0){continue;}
-			$text = trim($n['text']);
+			if($tag=='input'){
+				$text = trim(isset($n['attributes']['value'][0])?$n['attributes']['value']:'');	
+			}else{
+				if(!in_array($tag,$htags) && count($n['children'])>0){continue;}
+				$text = trim($n['text']);	
+			}
+			
 			if(strlen($text)==0){continue;}
 			$score = isset($this->conf_scores[$tag])?$this->conf_scores[$tag]:1;
 			$res[]=array('tag'=>$tag,'text'=>$text,'score'=>$score);
+
 		}
 		return $res;
 	}
@@ -162,9 +169,9 @@ class PickupKeywords{
 
 // 점수/평균/갯수 로 소팅
 function PickupKeywords_my_sort($a,$b){
-	$r = $b[1]/$b[0]-$a[1]/$a[0];
+	$r = $b[1]-$a[1];
 	if($r==0){
-		$r = $b[1]-$a[1];
+		$r = $b[1]/$b[0]-$a[1]/$a[0];
 		if($r==0){
 			$r = $b[0]-$a[0];
 		}
