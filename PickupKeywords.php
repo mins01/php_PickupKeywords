@@ -14,13 +14,13 @@ class PickupKeywords{
 		'h4'=>20,
 		'h5'=>10,
 		'h6'=>10,
-		'title'=>100,
+		'title'=>50,
 		'span'=>5,
 		'a'=>1,
 		'li'=>5,
 		'meta-description'=>50,
 		'meta-keywords'=>50,
-		'meta-og:title'=>100,
+		'meta-og:title'=>50,
 		'meta-og:description'=>25,
 	);
 	public $min_length = 2; //최소 길이
@@ -53,6 +53,7 @@ class PickupKeywords{
 				exit(__METHOD__.' : '.$curl_error);
 			}
 			$split_result = explode("\r\n\r\n", $data, 2);
+			// echo iconv_strlen($split_result[1],'utf-8');
 			return  isset($split_result[1])?$split_result[1]:'';
 		}else{
 			return file_get_contents($url);
@@ -157,9 +158,9 @@ class PickupKeywords{
 
 // 점수/평균/갯수 로 소팅
 function PickupKeywords_my_sort($a,$b){
-	$r = $b[1]-$a[1];
+	$r = $b[1]/$b[0]-$a[1]/$a[0];
 	if($r==0){
-		$r = $b[1]/$b[0]-$a[1]/$a[0];
+		$r = $b[1]-$a[1];
 		if($r==0){
 			$r = $b[0]-$a[0];
 		}
