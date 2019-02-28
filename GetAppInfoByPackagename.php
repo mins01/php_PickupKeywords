@@ -25,11 +25,7 @@ class GetAppInfoByPackagename extends PickupKeywords{
 	{
 		$this->setUrl('https://play.google.com/store/apps/details?id='.urlencode($packagename));
 	}
-	public function getTexts(){
-		$tags = parent::getTexts();
-		foreach($tags as & $tag){
-			$tag = str_replace('Apps on Google Play', '', $tag);
-		}
-		return $tags;
+	public function getHTML($url){
+		return str_replace('Apps on Google Play', '', parent::getHTML($url)); //불필요 단어 삭제
 	}
 }
