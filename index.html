@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="ko" >
+<head>
+	<title>php_PickupKeywords</title>
+	<meta charset="utf-8">
+	<meta http-equiv="Content-Script-Type" content="text/javascript">
+	<meta http-equiv="Content-Style-Type" content="text/css">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	
+	<!-- jquery 관련 -->
+	<!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" crossorigin="anonymous"></script>   -->
+	
+	
+	<!-- 부트스트랩 4 : IE8지원안됨! -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" crossorigin="anonymous"> 
+	<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" crossorigin="anonymous"></script>  -->
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" crossorigin="anonymous"></script>
+	<!-- vue.js -->
+	<!-- <script src="https://cdn.jsdelivr.net/npm/vue"></script> -->
+	
+	<!-- meta og -->
+	
+	<meta property="og:title" content="php_PickupKeywords">
+	<meta property="og:description" content="php_PickupKeywords">
+	<meta name="og:image" content="http://www.mins01.com/img/logo.gif">
+	<meta property="og:image:width" content="190">
+	<meta property="og:image:height" content="70" />
+	<meta property="og:site_name" content="php_PickupKeywords" />
+	<meta property="og:type" content="website">
+	
+	<!-- //meta og -->
+	
+	
+</head>
+<body>
+	<div class="container mb-5">
+		<h1>php_PickupKeywords</h1>
+		<h2>description </h2>
+		
+		<ul class="list-group">
+			<li class="list-group-item ">Pick up keywords from html</li>
+			<li class="list-group-item "><a href="html.PickupKeywords.php" target="_blank">test page</a></li>
+		</ul>
+		<hr />
+		<h2>constructor</h2>
+		<code>
+			<ul class="list-group">
+				<li class="list-group-item ">$pk = new PickupKeywords();</li>
+			</ul>
+		</code>
+		<h2>property</h2>
+		<code>
+			<ul class="list-group">
+				<li class="list-group-item ">public $search_tags = 'h1,h2,h3,h4,h5,title,span,div,li,a,input[type="text"][value]'; //selection rule for tag in html </li>
+				<li class="list-group-item ">public $search_metas = 'meta[name="description"],meta[name="keywords"],meta[property="og:title"],meta[property="og:description"]';  //selection rule for metatag in html</li>
+				<li class="list-group-item ">public $user_agent = 'Mozilla/5.0 PickupKeywords'; //user-agent for getHTML method </li>
+				<li class="list-group-item ">public $conf_scores = array('h1'=>50,'h2'=>40,...); // tag score</li>
+				<li class="list-group-item ">public $min_length = 2; //min-length for word</li>
+				<li class="list-group-item ">public $max_length = 100; //max-length for word</li>
+				<li class="list-group-item ">public $numeric_multiple = 1;//Weighting on numbers (0: ignore numbers)</li>
+			</ul>
+		</code>
+		<h2>method</h2>
+		<code>
+			<ul class="list-group">
+				<li class="list-group-item ">string $html = getHTML($url) :  get HTML from URL</li>
+				<li class="list-group-item ">void setUrl($url) :  Setting url for personal property variable html setting</li>
+				<li class="list-group-item ">void setHTML($html) :  Setting html for personal property variable html setting</li>
+				<li class="list-group-item ">Array $splited_words = split_tags_string($string) : String division using delimiters</li></li>
+				<li class="list-group-item ">Array $texts = getMetas() : Get meta tags using $search_metas.</li>
+				<li class="list-group-item ">Array $texts = getTags() : Get tags using $search_tags.</li>
+				<li class="list-group-item ">Array $texts = getTexts() : getMetas() + getTags() = Texts(with in tagname,text,score)</li>
+				<li class="list-group-item ">Array $words = getWords($texts) : Texts to words (words is splited from text)</li>
+			</ul>
+		</code>
+		<h2>structure </h2>
+		<code>
+			<ul class="list-group">
+				<li class="list-group-item ">$texts = array(array('tag'=>$tag,'text'=>$text,'score'=>$score), ...);</li>
+				<li class="list-group-item ">$texts = array(array('tag'=>$tag,'text'=>$text,'score'=>$score), ...);</li>
+			</ul>
+		</code>
+		<h2>etc </h2>
+		<code>
+			<ul class="list-group">
+				<li class="list-group-item ">PickupKeywords_my_sort($a,$b) : function for sorting </li>
+				
+			</ul>
+		</code>
+
+	</div>
+</body>
+</html>

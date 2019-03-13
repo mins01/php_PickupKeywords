@@ -4,11 +4,11 @@
  */
 class PickupKeywords{
 	private $html = '';
-	public $search_tags = 'h1,h2,h3,h4,h5,title,span,div,li,a,input[type="text"][value]';
-	public $search_metas = 'meta[name="description"],meta[name="keywords"],meta[property="og:title"],meta[property="og:description"]';
+	public $search_tags = 'h1,h2,h3,h4,h5,title,span,div,li,a,input[type="text"][value]'; //selection rule for tag in html
+	public $search_metas = 'meta[name="description"],meta[name="keywords"],meta[property="og:title"],meta[property="og:description"]'; //selection rule for meta-tag in html
 	// public $user_agent = 'Mozilla/5.0 (Linux; Android 5.0; SM-G900P Build/LRX21T) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.109 Mobile Safari/537.36'; //android
 	// public $user_agent = 'Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.109 Safari/537.36'; //PC-windows
-	public $user_agent = 'Mozilla/5.0 PickupKeywords'; //
+	public $user_agent = 'Mozilla/5.0 PickupKeywords'; //user-agent for getHTML method
 	
 	public $conf_scores = array(
 		'h1'=>50,
@@ -26,10 +26,16 @@ class PickupKeywords{
 		'meta-keywords'=>25,
 		'meta-og:title'=>25,
 		'meta-og:description'=>25,
-	);
-	public $min_length = 2; //최소 길이
-	public $max_length = 100; //최대 길이
-	public $numeric_multiple = 1;//숫자에 대한 배수(0이면 숫자는 우선순위가 0이 됨)
+	); // score for tags
+	public $min_length = 2; //min-length for word
+	public $max_length = 100; //max-length for word
+	public $numeric_multiple = 1;//Weighting on numbers (0: ignore numbers)
+	
+	/**
+	 * getHTML get HTML from URL
+	 * @param  string $url
+	 * @return string HTML content
+	 */
 	public function getHTML($url){
 		if(function_exists('curl_init')){
 			$conn = curl_init($url);
@@ -66,6 +72,10 @@ class PickupKeywords{
 		}
 			
 	}
+	/**
+	 * setUrl Setting url for personal property variable html setting
+	 * @param [type] $url [description]
+	 */
 	public function setUrl($url)
 	{
 		$html = $this->getHTML($url);
@@ -77,6 +87,10 @@ class PickupKeywords{
 		
 		$this->setHTML($html);
 	}
+	/**
+	 * setHTML  Setting html for personal property variable html setting
+	 * @param [type] $html [description]
+	 */
 	public function setHTML($html){
 		$doc = new DOMDocument('1.0','UTF-8');
 		libxml_use_internal_errors(true); //에러 감추기
@@ -95,12 +109,21 @@ class PickupKeywords{
 		$charset = isset($matched[1])?$matched[1]:'utf-8';
 		return strtolower($charset);
 	}
+	/**
+	 * split_tags_string String division using delimiters
+	 * @param  string $string
+	 * @return Array splited words
+	 */
 	public function split_tags_string($string){
 		$matched = array();
 		// preg_match_all('/([^#\t\s\n\x00-\x2C\x2E-\x2F\x3A-\x40\x5B-\x5E\x60\x7B-\x7F]{1,30})/u',strtolower($string),$matched);
 		preg_match_all('/([^#\t\s\n\x00-\x2C\x2E-\x2F\x3A-\x40\x5B-\x5E\x60\x7B-\x7F、，。]{'.$this->min_length.','.$this->max_length.'})/u',strtolower($string),$matched);
 		return isset($matched[1])?array_unique($matched[1]):array();
 	}
+	/**
+	 * getMetas Get meta tags using $search_metas.
+	 * @return Array
+	 */
 	public function getMetas(){
 		$res = array();
 		// print_r($this->html->saveHTML());
@@ -119,6 +142,10 @@ class PickupKeywords{
 		}
 		return $res;
 	}
+	/**
+	 * getTags Get tags using $search_tags.
+	 * @return Array
+	 */
 	public function getTags(){
 		$res = array();
 		$nodes = select_elements($this->search_tags, $this->html);
@@ -140,9 +167,17 @@ class PickupKeywords{
 		}
 		return $res;
 	}
+	/**
+	 * getTexts getMetas() + getTags() = Texts(with in tagname,text,score)
+	 * @return Array
+	 */
 	public function getTexts(){
 		return array_merge($this->getMetas(),$this->getTags());
 	}
+	/**
+	 * getWords Texts to words (words is splited from text)
+	 * @return Array
+	 */
 	public function getWords($texts){
 		$words = array();
 		foreach($texts as & $r){
@@ -151,13 +186,13 @@ class PickupKeywords{
 			foreach ($split_text as $k) {
 				$k = trim($k);
 				if(!isset($words[$k])){
-					$words[$k] = array(0,0,$k);
+					$words[$k] = array('word'=>$k,'count'=>0,'score'=>0);
 				}
-				$words[$k][0]++;
+				$words[$k]['count']++;
 				if(preg_match('/^\d+$/',$k)){ //숫자로만 이루어져있을 경우
-					$words[$k][1]+=($score*$this->numeric_multiple);	
+					$words[$k]['score']+=($score*$this->numeric_multiple);	
 				}else{
-					$words[$k][1]+=$score;
+					$words[$k]['score']+=$score;
 				}
 				
 			}
@@ -167,14 +202,17 @@ class PickupKeywords{
 	}
 }
 
-
-// 점수/평균/갯수 로 소팅
+/**
+ * PickupKeywords_my_sort function for sorting 
+ * @param [type] $a [description]
+ * @param [type] $b [description]
+ */
 function PickupKeywords_my_sort($a,$b){
-	$r = $b[1]-$a[1];
+	$r = $b['score']-$a['score'];
 	if($r==0){
-		$r = $b[1]/$b[0]-$a[1]/$a[0];
+		$r = $b['score']/$b['count']-$a['score']/$a['count'];
 		if($r==0){
-			$r = $b[0]-$a[0];
+			$r = $b['count']-$a['count'];
 		}
 	}
 	return  $r;

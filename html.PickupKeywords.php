@@ -112,11 +112,11 @@ if($mode =='url' && isset($url[0])){
 				<li class="list-group-item">
 					<h3>words (단어 추출+가중치 부과,TOP10)</h3>
 					<table class="table">
-						<tr><th>rank</th><th>count</th><th>score</th><th>word</th></tr>
+						<tr><th>rank</th><th>word</th><th>count</th><th>socre</th></tr>
 						<?
 						 	$i = 1;
 							foreach(array_slice($words,0,10) as $r): ?>
-							<tr><td><?=$i++?></td><td><?=$r[0]?></td><td><?=$r[1]?></td><td><?=htmlspecialchars($r[2])?></td></tr>
+							<tr><td><?=$i++?></td><td><?=htmlspecialchars($r['word'])?></td><td><?=$r['count']?></td><td><?=($r['score'])?></td></tr>
 						<? endforeach; ?>
 					</table>
 					<h3>texts (추출 내용). count : <?=count($texts); ?></h3>
