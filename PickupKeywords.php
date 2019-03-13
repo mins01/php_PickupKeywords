@@ -7,7 +7,8 @@ class PickupKeywords{
 	public $search_tags = 'h1,h2,h3,h4,h5,title,span,div,li,a,input[type="text"][value]';
 	public $search_metas = 'meta[name="description"],meta[name="keywords"],meta[property="og:title"],meta[property="og:description"]';
 	// public $user_agent = 'Mozilla/5.0 (Linux; Android 5.0; SM-G900P Build/LRX21T) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.109 Mobile Safari/537.36'; //android
-	public $user_agent = 'Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.109 Safari/537.36'; //PC-windows
+	// public $user_agent = 'Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.109 Safari/537.36'; //PC-windows
+	public $user_agent = 'Mozilla/5.0 PickupKeywords'; //
 	
 	public $conf_scores = array(
 		'h1'=>50,
