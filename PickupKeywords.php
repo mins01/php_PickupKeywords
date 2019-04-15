@@ -29,7 +29,7 @@ class PickupKeywords{
 	); // score for tags
 	public $min_length = 2; //min-length for word
 	public $max_length = 100; //max-length for word
-	public $numeric_multiple = 1;//Weighting on numbers (0: ignore numbers)
+	public $numericWeight = 1;//Weighting on numbers (0: ignore numbers)
 	
 	/**
 	 * getHTML get HTML from URL
@@ -190,7 +190,7 @@ class PickupKeywords{
 				}
 				$words[$k]['count']++;
 				if(preg_match('/^\d+$/',$k)){ //숫자로만 이루어져있을 경우
-					$words[$k]['score']+=($score*$this->numeric_multiple);	
+					$words[$k]['score']+=($score*$this->numericWeight);	
 				}else{
 					$words[$k]['score']+=$score;
 				}
